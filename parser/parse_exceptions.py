@@ -1,0 +1,2 @@
+class EmptyCacheError(Exception):
+	pass

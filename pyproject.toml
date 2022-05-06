@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "IMager"
+version = "0.1.0"
+description = "A window application project that hovers, if possible, pictures by key and creates pictures from pictures"
+authors = ["David Kuenka <cuencaldd2001.29@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+flake8 = "^4.0.1"
+isort = "^5.10.1"
+mypy = "^0.950"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
