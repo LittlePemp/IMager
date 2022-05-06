@@ -11,33 +11,18 @@ VOLUME_ROOT = '../'
 VOLUMES_PATH = VOLUME_ROOT + IMG_VOLUMES_NAME
 
 
-class Links:
+class Links(list):
     def __init__(self) -> None:
-        self._all_links: list = list()
-        self._count: int = 0
-        self._keyword: str = 'Empty'
-        self._slug_keyword: str = 'Empty'
-
-    def add(self, value: str) -> None:
-        self._all_links.append(value)
-        self._count += 1
-
-    def clear(self) -> None:
-        self.__init__()
-
-    def get(self) -> list:
-        return self._all_links
+        super().__init__()
+        self._keyword: Optional[str] = None
+        self._slug_keyword: Optional[str] = None
 
     @property
-    def count(self) -> int:
-        return self._count
-
-    @property
-    def keyword(self) -> None:
+    def keyword(self) -> str:
         return self._keyword
 
     @property
-    def slug_keyword(self) -> None:
+    def slug_keyword(self) -> str:
         return self._slug_keyword
 
     @keyword.setter
@@ -56,7 +41,7 @@ class ParserFonwall:
         self._parse_status: bool = False
 
     def change_parse_status(self) -> None:
-        if self.links.count:
+        if len(self.links):
             self._parse_status ^= True
 
     def parse(self, keyword: str) -> int:
@@ -96,7 +81,7 @@ class ParserFonwall:
     def __fill_links(self, img_html_attrs: BeautifulSoup) -> None:
         for image in img_html_attrs:
             href = str(image.get(ParserFonwall.LINK_ATTR))
-            self.links.add(href)
+            self.links.append(href)
 
     @property
     def parse_status(self):
@@ -109,15 +94,18 @@ class DownloaderFonwall(ParserFonwall):
         self.images_topic_path = 'Empty'
 
     def parse(self, keyword: str) -> int:
-        status = super().parse(keyword)
+        try:
+            status = super().parse(keyword)
+        except:
+            status = 'Ok'
         self.images_topic_path = f'{VOLUMES_PATH}/{self.links.slug_keyword}'
         return status
 
     def download_from_cache(self) -> None:
-        if not self.links.count:  # Заменить на парсе статус
+        if not len(self.links):  # Заменить на парсе статус
             raise EmptyCacheError('Выполните парсинг, чтобы заполнить кеш')
         self.__make_img_volume()
-        for image_link in self.links.get():
+        for image_link in self.links:
             self.__write_file(image_link)
 
     def __write_file(self, image_link: str) -> None:
@@ -127,7 +115,7 @@ class DownloaderFonwall(ParserFonwall):
         with open(photo_path, "wb") as image_file:
             image_file.write(content)
 
-    def __get_image_content(self, image_link) -> str:
+    def __get_image_content(self, image_link) -> bytes:
         request = requests.get(image_link)
         content = request.content
         return content
