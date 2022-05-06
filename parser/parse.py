@@ -1,4 +1,3 @@
-from abc import ABC, abstractmethod, abstractproperty
 import os
 import requests
 from bs4 import BeautifulSoup
@@ -65,7 +64,7 @@ class ParserFonwall:
         url_key = ParserFonwall.URL + keyword
         try:
             self.__parse_pages(url_key)
-        except:
+        except Exception:
             pass
         self.change_parse_status()
         return self.parse_status
@@ -138,15 +137,3 @@ class DownloaderFonwall(ParserFonwall):
             os.mkdir(VOLUMES_PATH)
         if self.links.slug_keyword not in os.listdir(VOLUMES_PATH):
             os.mkdir(self.images_topic_path)
-
-
-def main():
-    d = DownloaderFonwall()
-    try:
-        d.parse('Машина')
-    except:
-        pass
-    d.download_from_cache()
-
-if __name__ == '__main__':
-    main()
