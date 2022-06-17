@@ -1,0 +1,16 @@
+# GENERAL
+CONTENT_ROOT = '../'
+
+# PARSER
+IMG_VOLUMES_NAME = 'images_volume'
+
+# DB HANDLER
+DB_NAME = 'imager.db'
+
+# IMAGE_ASSEMBLY
+DEFAULT_CROPPED_FILE_NAME = 'cropped.png'
+DEFAULT_IMAGER_SOURCE = 'imager_source'
+DEFAULT_RESOURCE_VOLUME_NAME = 'resources'
+DEFAULT_RESULT_IMAGE_NAME = 'result.png'
+DEFAULT_RESULT_VOLUME_NAME = 'results'
+DEFAULT_TEMPLATE_NAME = 'template.png'

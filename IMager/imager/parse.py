@@ -1,13 +1,17 @@
 import os
+import shutil
+from typing import List, Optional
+
 import requests
 from bs4 import BeautifulSoup
 from transliterate import slugify
 
-from parse_exceptions import EmptyCacheError
+import config
 
+from exceptions.parse_exceptions import EmptyCacheError, NotImagesVolumesError
 
-IMG_VOLUMES_NAME = 'images_volume'
-VOLUME_ROOT = '../'
+VOLUME_ROOT = config.CONTENT_ROOT
+IMG_VOLUMES_NAME = config.IMG_VOLUMES_NAME
 VOLUMES_PATH = VOLUME_ROOT + IMG_VOLUMES_NAME
 
 
@@ -28,7 +32,8 @@ class Links(list):
     @keyword.setter
     def keyword(self, value: str) -> None:
         self._keyword = value
-        self._slug_keyword = slugify(self._keyword)
+        #  Тут кринж из-за slugify, он не транслитит, если все трансы
+        self._slug_keyword = slugify(self.keyword + 'А')[:-1]
 
 
 class ParserFonwall:
@@ -44,15 +49,16 @@ class ParserFonwall:
         if len(self.links):
             self._parse_status ^= True
 
-    def parse(self, keyword: str) -> int:
+    def parse(self, keyword: str) -> None:
         self.links.keyword = keyword
         url_key = ParserFonwall.URL + keyword
         try:
             self.__parse_pages(url_key)
-        except Exception:
+        except:
             pass
+        print(f'Запарсено {len(self.links)}'
+              f' изображений - {self.links.keyword}')
         self.change_parse_status()
-        return self.parse_status
 
     def __parse_pages(self, url_key: str) -> None:
         page_number = 0
@@ -63,13 +69,13 @@ class ParserFonwall:
             is_images = self.__parse_links(url_key_page)
 
     def __parse_links(self, url_key_page: str) -> bool:
-        img_html_attrs = self.___get_img_html_attrs(url_key_page)
+        img_html_attrs = self.__get_img_html_attrs(url_key_page)
         if len(img_html_attrs) <= 1:
             return False
         self.__fill_links(img_html_attrs)
         return True
 
-    def ___get_img_html_attrs(self, url_key_page: str) -> list:
+    def __get_img_html_attrs(self, url_key_page: str) -> list:
         html = requests.get(url_key_page).text
         soup = BeautifulSoup(html, 'html.parser')
         img_html_attrs = soup.findAll(
@@ -84,38 +90,43 @@ class ParserFonwall:
             self.links.append(href)
 
     @property
-    def parse_status(self):
+    def parse_status(self) -> bool:
         return self._parse_status
 
 
 class DownloaderFonwall(ParserFonwall):
     def __init__(self) -> None:
         super().__init__()
-        self.images_topic_path = 'Empty'
+        self.images_topic_path: Optional[str] = None
 
-    def parse(self, keyword: str) -> int:
+    def parse(self, keyword: str) -> None:
         try:
-            status = super().parse(keyword)
+            super().parse(keyword)
         except:
-            status = 'Ok'
+            pass
         self.images_topic_path = f'{VOLUMES_PATH}/{self.links.slug_keyword}'
-        return status
 
     def download_from_cache(self) -> None:
-        if not len(self.links):  # Заменить на парсе статус
+        if not self.parse_status:
             raise EmptyCacheError('Выполните парсинг, чтобы заполнить кеш')
         self.__make_img_volume()
-        for image_link in self.links:
-            self.__write_file(image_link)
+        self.__passing_links()
 
-    def __write_file(self, image_link: str) -> None:
-        photo_name = image_link[image_link.rfind('/'):image_link.rfind('?')]
+    def __passing_links(self) -> None:
+        images_in_volume = self.get_images_in_volume()
+        for image_link in self.links:
+            photo_name = image_link[image_link.rfind('/')
+                                    :image_link.rfind('?')]
+            if photo_name not in images_in_volume:
+                self.__write_file(image_link, photo_name)
+
+    def __write_file(self, image_link: str, photo_name: str) -> None:
         photo_path = f'{self.images_topic_path}/{photo_name}'
         content = self.__get_image_content(image_link)
         with open(photo_path, "wb") as image_file:
             image_file.write(content)
 
-    def __get_image_content(self, image_link) -> bytes:
+    def __get_image_content(self, image_link: str) -> bytes:
         request = requests.get(image_link)
         content = request.content
         return content
@@ -125,3 +136,19 @@ class DownloaderFonwall(ParserFonwall):
             os.mkdir(VOLUMES_PATH)
         if self.links.slug_keyword not in os.listdir(VOLUMES_PATH):
             os.mkdir(self.images_topic_path)
+
+    def get_images_in_volume(self) -> List[str]:
+        ''' /<photo_name> '''
+        topic_dir = os.listdir(self.images_topic_path)
+        formated_topic_dir = ['/' + photo_name for photo_name in topic_dir]
+        return formated_topic_dir
+
+    def del_all_volumes(self) -> None:
+        ''' Добавить количество элементов в def volume_content
+            И сделать словарь из волюмес, возможно отдельный класс
+        '''
+        if IMG_VOLUMES_NAME not in os.listdir(VOLUME_ROOT):
+            raise NotImagesVolumesError('Удалять нечего')
+        volumes = ', '.join(os.listdir(VOLUMES_PATH))
+        shutil.rmtree(VOLUMES_PATH)
+        print('Удалены: ', volumes)
