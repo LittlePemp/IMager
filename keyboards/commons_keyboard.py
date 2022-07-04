@@ -1,5 +1,4 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
-
+from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
 start_button = KeyboardButton('/Начать')
 help_button = KeyboardButton('/Поддержать')

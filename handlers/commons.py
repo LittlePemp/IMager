@@ -1,5 +1,4 @@
-from aiogram import types, Dispatcher
-from create_bot import bot, dp
+from aiogram import Dispatcher, types
 from keyboards import common_keyboard
 
 
