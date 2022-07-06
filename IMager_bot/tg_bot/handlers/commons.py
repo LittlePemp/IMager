@@ -1,5 +1,5 @@
 from aiogram import Dispatcher, types
-from keyboards import common_keyboard
+from tg_bot.keyboards import common_keyboard
 
 
 async def command_start(message: types.Message):

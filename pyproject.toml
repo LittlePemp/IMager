@@ -1,16 +1,19 @@
 [tool.poetry]
-name = "IMager"
-version = "0.1.0"
-description = "A window application project that hovers, if possible, pictures by key and creates pictures from pictures"
-authors = ["David Kuenka <cuencaldd2001.29@gmail.com>"]
+name = "imager"
+version = "0.0.1"
+description = "IMager is a telegram bot project that creates images from other images"
+authors = ["LittlePemp <52671349+LittlePemp@users.noreply.github.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
+aiogram = "^2.21"
+Pillow = "^9.2.0"
+transliterate = "^1.10.2"
+python-dotenv = "^0.20.0"
+requests = "^2.28.1"
+bs4 = "^0.0.1"
 
 [tool.poetry.dev-dependencies]
-flake8 = "^4.0.1"
-isort = "^5.10.1"
-mypy = "^0.950"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

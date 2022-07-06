@@ -5,14 +5,10 @@ from typing import List, Optional
 import requests
 from bs4 import BeautifulSoup
 from transliterate import slugify
+from settings.config import topics_abs, content_abs
 
-import config
-
-from exceptions.parse_exceptions import EmptyCacheError, NotImagesVolumesError
-
-VOLUME_ROOT = config.CONTENT_ROOT
-IMG_VOLUMES_NAME = config.IMG_VOLUMES_NAME
-VOLUMES_PATH = VOLUME_ROOT + IMG_VOLUMES_NAME
+from .exceptions.parse_exceptions import EmptyCacheError, NotImagesVolumesError
+from .db_handler import ImagerDB
 
 
 class Links(list):
@@ -104,13 +100,15 @@ class DownloaderFonwall(ParserFonwall):
             super().parse(keyword)
         except:
             pass
-        self.images_topic_path = f'{VOLUMES_PATH}/{self.links.slug_keyword}'
+        self.images_topic_path = os.path.join(topics_abs,
+                                              self.links.slug_keyword)
 
     def download_from_cache(self) -> None:
         if not self.parse_status:
             raise EmptyCacheError('Выполните парсинг, чтобы заполнить кеш')
-        self.__make_img_volume()
+        self.__make_topic_volume()
         self.__passing_links()
+
 
     def __passing_links(self) -> None:
         images_in_volume = self.get_images_in_volume()
@@ -122,8 +120,8 @@ class DownloaderFonwall(ParserFonwall):
 
     def __write_file(self, image_link: str, photo_name: str) -> None:
         photo_path = f'{self.images_topic_path}/{photo_name}'
-        content = self.__get_image_content(image_link)
         with open(photo_path, "wb") as image_file:
+            content = self.__get_image_content(image_link)
             image_file.write(content)
 
     def __get_image_content(self, image_link: str) -> bytes:
@@ -131,10 +129,10 @@ class DownloaderFonwall(ParserFonwall):
         content = request.content
         return content
 
-    def __make_img_volume(self) -> None:
-        if IMG_VOLUMES_NAME not in os.listdir(VOLUME_ROOT):
-            os.mkdir(VOLUMES_PATH)
-        if self.links.slug_keyword not in os.listdir(VOLUMES_PATH):
+    def __make_topic_volume(self) -> None:
+        if not os.path.exists(topics_abs):
+            os.mkdir(topics_abs)
+        if self.links.slug_keyword not in os.listdir(topics_abs):
             os.mkdir(self.images_topic_path)
 
     def get_images_in_volume(self) -> List[str]:
@@ -147,8 +145,8 @@ class DownloaderFonwall(ParserFonwall):
         ''' Добавить количество элементов в def volume_content
             И сделать словарь из волюмес, возможно отдельный класс
         '''
-        if IMG_VOLUMES_NAME not in os.listdir(VOLUME_ROOT):
+        if topics_abs not in os.listdir(content_abs):
             raise NotImagesVolumesError('Удалять нечего')
-        volumes = ', '.join(os.listdir(VOLUMES_PATH))
-        shutil.rmtree(VOLUMES_PATH)
+        volumes = ', '.join(os.listdir(topics_abs))
+        shutil.rmtree(topics_abs)
         print('Удалены: ', volumes)

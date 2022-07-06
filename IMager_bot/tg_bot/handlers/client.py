@@ -4,13 +4,17 @@ from datetime import datetime
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
+from settings.config import host_platform, users_photos_abs, topics
+import os
 
-from keyboards import common_keyboard, noise_degrees_keyboard, topic_keyboard
+from tg_bot.keyboards import common_keyboard, noise_degrees_keyboard, topic_keyboard
 
-topics_various = ['Котики', 'Аниме']  # INCONFIG
+
 uncorrect_answer = 'Пожалуйста, выберите из предложенного'
-IMAGES_VOLUME = '../images/'
-name_format = IMAGES_VOLUME + '%Y%m%d_%H%M%s.jpg'
+if 'win' in host_platform:
+    name_format = os.path.join(users_photos_abs, '%Y%m%d_%H%M%S.jpg')
+else:
+    name_format = os.path.join(users_photos_abs, '%Y%m%d_%H%M%s.jpg')
 waited_buff = set()
 
 
@@ -42,7 +46,7 @@ async def start_imager(message: types.Message, state=None):
 
 @to_start
 async def read_topic(message: types.Message, state: FSMContext):
-    if message.text not in topics_various:
+    if message.text not in topics:
         await message.reply(
             uncorrect_answer,
             reply_markup=topic_keyboard)

@@ -1,26 +1,20 @@
 import sqlite3
 import os
 
-import config
-import image_assembly as ia
-import parse
+from settings.config import DB_NAME, db_abs, content_abs, topics_abs
+from .image_assembly import ImageEngine as IE
 
-
-DB_ROOT = config.CONTENT_ROOT
-DB_NAME = config.DB_NAME
-DB_PATH = DB_ROOT + DB_NAME
-VOLUMES_PATH = parse.VOLUMES_PATH
 
 class ImagerDB:
     def __init__(self):
         self.db_init()
-        self.connection = sqlite3.connect(DB_PATH)
+        self.connection = sqlite3.connect(db_abs)
         self.cursor = self.connection.cursor()
-        self.image_handler = ia.ImageHandler()
+        self.image_handler = IE()
 
     def db_init(self):
-        if DB_NAME not in os.listdir(DB_ROOT):
-            with open(DB_PATH, 'w') as db_file:
+        if DB_NAME not in os.listdir(content_abs):
+            with open(db_abs, 'w') as db_file:
                 print('Создана БД')
 
     def create_table(self, table_name: str) -> None:
@@ -33,7 +27,7 @@ class ImagerDB:
 
     def db_delete(self) -> None:
         try:
-            os.remove(DB_PATH)
+            os.remove(db_abs)
         except:
             pass
 
@@ -51,22 +45,22 @@ class ImagerDB:
 
 
     def __passing_keyword_images(self, keyword: str) -> None:
-        kw_volume = f'{VOLUMES_PATH}/{keyword}'
+        kw_volume = os.path.join(topics_abs, keyword)
         images_names = os.listdir(kw_volume)
-        executables = list()
         for image_name in images_names:
-            image_path = f'{kw_volume}/{image_name}'
+            image_path = os.path.join(kw_volume, image_name)
             image_attrs = self.image_handler.get_avg_colors(image_path)
-            image_attrs += (image_name, )
-            request = ('INSERT INTO '
-                f'{keyword}('
-                'r,'
-                'g,'
-                'b,'
-                'img_name)'
-                f'VALUES {image_attrs}')
-            try:
-                self.cursor.execute(request)
-            except Exception as e:
-                print(e)
+            if image_attrs is not None:
+                image_attrs += (image_name, )
+                request = ('INSERT INTO '
+                    f'{keyword}('
+                    'r,'
+                    'g,'
+                    'b,'
+                    'img_name)'
+                    f'VALUES {image_attrs}')
+                try:
+                    self.cursor.execute(request)
+                except Exception as e:
+                    print(e)
         self.connection.commit()
