@@ -5,7 +5,7 @@ from datetime import datetime
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from settings.config import host_platform, topics, users_photos_abs
+from settings.config import host_platform, topics, users_photos_abs, noise_degrees
 from tg_bot.keyboards import (common_keyboard, noise_degrees_keyboard,
                               topic_keyboard)
 
@@ -63,7 +63,7 @@ async def read_topic(message: types.Message, state: FSMContext):
 
 @to_start
 async def read_noise_degree(message: types.Message, state: FSMContext):
-    if not (message.text.isdigit() and (0 <= int(message.text) <= 7)):
+    if message.text not in noise_degrees:
         await message.reply(uncorrect_answer)
     else:
         async with state.proxy() as data:

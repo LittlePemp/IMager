@@ -10,8 +10,9 @@ dotenv_path = join(abspath(''), '.env')
 CONTENT_VOLUME = 'content'
 content_abs = abspath('content')
 
-# TG TOPICS
+# TG KEYBOARDS
 topics = ['Котики', 'Аниме']
+noise_degrees = ['Нет', 'Средне', 'Сильно']
 
 # TG VOLUMES
 USERS_PHOTOS = 'users_photos'
