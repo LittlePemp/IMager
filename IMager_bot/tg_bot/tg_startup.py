@@ -1,8 +1,10 @@
+import os
+
 from aiogram.utils import executor
+from settings.config import users_photos_abs
+
 from tg_bot.create_bot import get_dp
 from tg_bot.handlers import client, commons
-from settings.config import users_photos_abs
-import os
 
 
 def make_user_volume():

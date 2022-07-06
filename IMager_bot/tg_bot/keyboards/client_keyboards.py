@@ -1,7 +1,6 @@
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 from settings.config import topics
 
-
 to_start_button = KeyboardButton('Начало')
 
 # Topic buttons

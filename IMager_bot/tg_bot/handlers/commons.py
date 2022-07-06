@@ -24,11 +24,9 @@ async def unknown_answer(message: types.Message):
 
 def register_handlers(dp: Dispatcher):
     ''' Регистрируем без декораоров '''
-    dp.register_message_handler(command_start, commands=[
-                                                         'start',
+    dp.register_message_handler(command_start, commands=['start',
                                                          'help',
                                                          'Помощь'])
-    dp.register_message_handler(command_devsupport, commands=[
-                                                              'devsupport',
+    dp.register_message_handler(command_devsupport, commands=['devsupport',
                                                               'Поддержать'])
     dp.register_message_handler(unknown_answer)

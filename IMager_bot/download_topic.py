@@ -1,7 +1,5 @@
-from tkinter import Image
-from IMager.imager.parse import DownloaderFonwall as DF
 from IMager.imager.db_handler import ImagerDB
-
+from IMager.imager.parse import DownloaderFonwall as DF
 
 if __name__ == '__main__':
     topic_name = input('Введите название темы: ')

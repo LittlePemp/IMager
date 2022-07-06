@@ -7,6 +7,7 @@ from aiogram.dispatcher import Dispatcher
 from dotenv import load_dotenv
 from settings.config import dotenv_path
 
+
 def get_dp():
     load_dotenv(dotenv_path)
 

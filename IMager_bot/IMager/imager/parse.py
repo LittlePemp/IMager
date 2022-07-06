@@ -4,11 +4,11 @@ from typing import List, Optional
 
 import requests
 from bs4 import BeautifulSoup
+from settings.config import content_abs, topics_abs
 from transliterate import slugify
-from settings.config import topics_abs, content_abs
 
-from .exceptions.parse_exceptions import EmptyCacheError, NotImagesVolumesError
 from .db_handler import ImagerDB
+from .exceptions.parse_exceptions import EmptyCacheError, NotImagesVolumesError
 
 
 class Links(list):

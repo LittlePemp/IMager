@@ -12,6 +12,7 @@ transliterate = "^1.10.2"
 python-dotenv = "^0.20.0"
 requests = "^2.28.1"
 bs4 = "^0.0.1"
+isort = "^5.10.1"
 
 [tool.poetry.dev-dependencies]
 

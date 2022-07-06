@@ -1,7 +1,7 @@
 import sys
-from os.path import dirname, join, abspath
-import settings
+from os.path import abspath, dirname, join
 
+import settings
 
 # sys settings
 host_platform = sys.platform

@@ -1,14 +1,13 @@
+import os
 import time
 from datetime import datetime
 
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from settings.config import host_platform, users_photos_abs, topics
-import os
-
-from tg_bot.keyboards import common_keyboard, noise_degrees_keyboard, topic_keyboard
-
+from settings.config import host_platform, topics, users_photos_abs
+from tg_bot.keyboards import (common_keyboard, noise_degrees_keyboard,
+                              topic_keyboard)
 
 uncorrect_answer = 'Пожалуйста, выберите из предложенного'
 if 'win' in host_platform:

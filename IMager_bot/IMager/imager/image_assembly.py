@@ -1,10 +1,8 @@
-import os
+from typing import Optional, Tuple
 
 from PIL import Image
-from typing import Optional, Tuple
-from settings.config import RES_VOLUME, TEMP_VOLUME, TOPICS_VOLUME
-
-from settings.config import content_abs, TOPICS_VOLUME, results_abs, topics_abs, temp_abs
+from settings.config import (RES_VOLUME, TEMP_VOLUME, TOPICS_VOLUME,
+                             content_abs, results_abs, temp_abs, topics_abs)
 
 
 class ImageEngine:
