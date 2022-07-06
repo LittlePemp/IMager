@@ -5,21 +5,24 @@ from datetime import datetime
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from settings.config import host_platform, topics, users_photos_abs, noise_degrees
+from settings.config import host_platform, topics, users_images_abs, noise_degrees, new_image_sizes
 from tg_bot.keyboards import (common_keyboard, noise_degrees_keyboard,
-                              topic_keyboard)
+                              topic_keyboard, new_image_size_keyboard)
+from IMager.imager.model import ImagerModel
 
 uncorrect_answer = 'Пожалуйста, выберите из предложенного'
 if 'win' in host_platform:
-    name_format = os.path.join(users_photos_abs, '%Y%m%d_%H%M%S.jpg')
+    name_format = os.path.join(users_images_abs, '%Y%m%d_%H%M%S.jpg')
 else:
-    name_format = os.path.join(users_photos_abs, '%Y%m%d_%H%M%s.jpg')
+    name_format = os.path.join(users_images_abs, '%Y%m%d_%H%M%s.jpg')
+
+im = ImagerModel()
 waited_buff = set()
 
 
 def to_start(handler):
     async def wrapper_do_twice(message: types.Message, state=None):
-        if 'Начало' == message.text:
+        if 'В начало' == message.text:
             await state.finish()
             await message.answer(
                 'Начнем с начала...',
@@ -32,7 +35,8 @@ def to_start(handler):
 class FSMImager(StatesGroup):
     topic_name = State()
     noise_degree = State()
-    photo = State()
+    new_image_size = State()
+    image = State()
 
 
 @to_start
@@ -45,7 +49,7 @@ async def start_imager(message: types.Message, state=None):
 
 @to_start
 async def read_topic(message: types.Message, state: FSMContext):
-    if message.text not in topics:
+    if message.text not in topics.keys():
         await message.reply(
             uncorrect_answer,
             reply_markup=topic_keyboard)
@@ -63,40 +67,58 @@ async def read_topic(message: types.Message, state: FSMContext):
 
 @to_start
 async def read_noise_degree(message: types.Message, state: FSMContext):
-    if message.text not in noise_degrees:
+    if message.text not in noise_degrees.keys():
         await message.reply(uncorrect_answer)
     else:
         async with state.proxy() as data:
             data['noise_degree'] = message.text
         await FSMImager.next()
         await message.reply(
+            'Какой будет размер нового фото?',
+            reply_markup=new_image_size_keyboard)
+
+
+@to_start
+async def read_new_image_size(message: types.Message, state: FSMContext):
+    if message.text not in new_image_sizes.keys():
+        await message.reply(uncorrect_answer)
+    else:
+        async with state.proxy() as data:
+            data['new_image_size'] = message.text
+        await FSMImager.next()
+        await message.reply(
             'Загрузите фото',
             reply_markup=types.ReplyKeyboardRemove())
 
 
-async def read_photo(message: types.Message, state: FSMContext):
+async def read_image(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
 
     if message.from_user.id not in waited_buff:
         waited_buff.add(user_id)
 
         async with state.proxy() as data:
-            await download_image(message)
-            data['photo_path'] = '123'  # photo_path
-        # Test
+            image_path = await download_image(message)
+            data['image_path'] = image_path
             await message.reply('Фото успешно загружено. Ожидайте...')
-            time.sleep(5)
-            await message.answer(
-                'Тут возвращается фото',
-                reply_markup=common_keyboard)
+            new_image_path = image_path  # im.get_new_image(data)
+            await send_new_image(message, new_image_path)
         waited_buff.remove(user_id)
         await state.finish()
 
 
+async def send_new_image(message: types.Message, new_image_path: str):
+    try:
+        await message.answer_document(open(new_image_path, 'rb'))
+    except:
+        await message.answer('Что-то не получилоссь... Повторите позже.', reply_markup=topic_keyboard)
+
+
 async def download_image(message: types.Message):
     now = datetime.now()
-    photo_path = now.strftime(name_format)
-    await message.photo[2].download(destination_file=photo_path)  # [2] is LQ
+    image_path = now.strftime(name_format)
+    await message.photo[2].download(destination_file=image_path)  # [2] is LQ
+    return image_path
 
 
 def register_handlers(dp: Dispatcher):
@@ -111,6 +133,9 @@ def register_handlers(dp: Dispatcher):
         read_noise_degree,
         state=FSMImager.noise_degree)
     dp.register_message_handler(
-        read_photo,
+        read_new_image_size,
+        state=FSMImager.new_image_size)
+    dp.register_message_handler(
+        read_image,
         content_types=['photo'],
-        state=FSMImager.photo)
+        state=FSMImager.image)

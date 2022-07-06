@@ -2,7 +2,7 @@ import sqlite3
 import os
 
 from settings.config import DB_NAME, db_abs, content_abs, topics_abs
-from .image_assembly import ImageEngine as IE
+from .image_assembly import ImageAlgs as IA
 
 
 class ImagerDB:
@@ -10,7 +10,7 @@ class ImagerDB:
         self.db_init()
         self.connection = sqlite3.connect(db_abs)
         self.cursor = self.connection.cursor()
-        self.image_handler = IE()
+        self.image_handler = IA()
 
     def db_init(self):
         if DB_NAME not in os.listdir(content_abs):

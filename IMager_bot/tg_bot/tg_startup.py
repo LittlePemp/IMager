@@ -1,15 +1,15 @@
 import os
 
 from aiogram.utils import executor
-from settings.config import users_photos_abs
+from settings.config import users_images_abs
 
 from tg_bot.create_bot import get_dp
 from tg_bot.handlers import client, commons
 
 
 def make_user_volume():
-    if not os.path.exists(users_photos_abs):
-        os.makedirs(users_photos_abs)
+    if not os.path.exists(users_images_abs):
+        os.makedirs(users_images_abs)
 
 
 async def on_startup(_):
