@@ -7,7 +7,7 @@ if __name__ == '__main__':
     df = DF()
     df.parse(topic_name)
     df.download_from_cache()
-    
+
     print('Скачали что могли. Сечас заполним БД')
     idb = ImagerDB()
     idb.fill_db(df.links.slug_keyword)

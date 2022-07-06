@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 from settings.config import content_abs, topics_abs
 from transliterate import slugify
 
-from .db_handler import ImagerDB
 from .exceptions.parse_exceptions import EmptyCacheError, NotImagesVolumesError
 
 
@@ -109,12 +108,11 @@ class DownloaderFonwall(ParserFonwall):
         self.__make_topic_volume()
         self.__passing_links()
 
-
     def __passing_links(self) -> None:
         images_in_volume = self.get_images_in_volume()
         for image_link in self.links:
-            photo_name = image_link[image_link.rfind('/')
-                                    :image_link.rfind('?')]
+            photo_name = image_link[image_link.rfind('/'):
+                                    image_link.rfind('?')]
             if photo_name not in images_in_volume:
                 self.__write_file(image_link, photo_name)
 

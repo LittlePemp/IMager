@@ -1,6 +1,6 @@
 class EmptyCacheError(Exception):
-	pass
+    pass
 
 
 class NotImagesVolumesError(Exception):
-	pass
+    pass

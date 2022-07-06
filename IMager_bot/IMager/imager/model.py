@@ -14,7 +14,7 @@ class ImagerModel:
         self.dirs_tree_init()
         self.idb = ImagerDB()
         self.parser = DownloaderFonwall()
-        
+
     def get_new_images(self, keyword: str) -> None:
         self.parser.parse(keyword)
         self.parser.download_from_cache()
