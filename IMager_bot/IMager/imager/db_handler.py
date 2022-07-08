@@ -1,8 +1,9 @@
 import sqlite3
 import os
+from PIL import Image
+from typing import Optional
 
 from settings.config import DB_NAME, db_abs, content_abs, topics_abs
-from .image_assembly import ImageAlgs as IA
 
 
 class ImagerDB:
@@ -10,7 +11,7 @@ class ImagerDB:
         self.db_init()
         self.connection = sqlite3.connect(db_abs)
         self.cursor = self.connection.cursor()
-        self.image_handler = IA()
+        print('Прогружена БД')
 
     def db_init(self):
         if DB_NAME not in os.listdir(content_abs):
@@ -43,12 +44,30 @@ class ImagerDB:
         self.create_table(keyword)
         self.__passing_keyword_images(keyword)
 
+    def get_images(self, keyword) -> list[list[int]]:
+        request_text = f'SELECT * FROM {keyword}'
+        self.cursor.execute(request_text)
+        result = self.cursor.fetchall()
+        return result
+
+    def __get_avg_colors(self, image_path: str) -> Optional[tuple[int]]:
+        try:
+            rgb = self._get_rgb_attrs(image_path)
+            attrs = (rgb[0, 0][0], rgb[0, 0][1], rgb[0, 0][2])
+            return attrs
+        except Exception as e:
+            print(e)
+
+    def _get_rgb_attrs(self, image_path: str):
+        image = Image.open(image_path)
+        return image.resize((1, 1)).load()
+
     def __passing_keyword_images(self, keyword: str) -> None:
         kw_volume = os.path.join(topics_abs, keyword)
         images_names = os.listdir(kw_volume)
         for image_name in images_names:
             image_path = os.path.join(kw_volume, image_name)
-            image_attrs = self.image_handler.get_avg_colors(image_path)
+            image_attrs = self.__get_avg_colors(image_path)
             if image_attrs is not None:
                 image_attrs += (image_name, )
                 request = ('INSERT INTO '

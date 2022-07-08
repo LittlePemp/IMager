@@ -11,9 +11,9 @@ CONTENT_VOLUME = 'content'
 content_abs = abspath('content')
 
 # TG KEYBOARDS
-topics = {'Котики': 'Koty', 'Аниме': 'Anime'}
-noise_degrees = {'Нет': (0, 0), 'Среднеe': (20, 50), 'Сильно': (60, 100)}
-new_image_sizes = {'Маленькое': 25, 'Среднее': 50, 'Большое': 100}
+topics = {'Котики': 'koty', 'Аниме': 'anime'}
+noise_degrees = {'Нет': (0, 0), 'Среднее': (30, 50), 'Сильно': (60, 100)}
+new_image_sizes = {'Маленькое': 25, 'Среднее': 50, 'Большое': 100, 'Очень большое': 150}
 
 # TG VOLUMES
 USERS_IMAGES = 'users_images'
@@ -35,12 +35,12 @@ results_abs = join(content_abs, RES_VOLUME)
 
 
 # IMAGE_ASSEMBLY
-CROPPED_POSTFIX = 'cr.png'
+RESIZED_POSTFIX = 'rz.png'
 RESULT_POSTFIX = 'res.png'
 TEMPLATE_POSTFIX = 'tmpl.png'
 RGB_SIZE = 256
 DISCR_BLOCK = 32
-mini_size = 45
+mini_size = 50
 blocks_cnt = RGB_SIZE // DISCR_BLOCK
 
 # DB HANDLER

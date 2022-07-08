@@ -101,7 +101,7 @@ async def read_image(message: types.Message, state: FSMContext):
             image_path = await download_image(message)
             data['image_path'] = image_path
             await message.reply('Фото успешно загружено. Ожидайте...')
-            new_image_path = image_path  # im.get_new_image(data)
+            new_image_path = im.get_new_image(data)
             await send_new_image(message, new_image_path)
         waited_buff.remove(user_id)
         await state.finish()
@@ -109,9 +109,9 @@ async def read_image(message: types.Message, state: FSMContext):
 
 async def send_new_image(message: types.Message, new_image_path: str):
     try:
-        await message.answer_document(open(new_image_path, 'rb'))
+        await message.answer_document(open(new_image_path, 'rb'), reply_markup=common_keyboard)
     except:
-        await message.answer('Что-то не получилоссь... Повторите позже.', reply_markup=topic_keyboard)
+        await message.answer('Что-то не получилоссь... Повторите позже.', reply_markup=common_keyboard)
 
 
 async def download_image(message: types.Message):

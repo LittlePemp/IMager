@@ -15,6 +15,7 @@ class Links(list):
         super().__init__()
         self._keyword: Optional[str] = None
         self._slug_keyword: Optional[str] = None
+        self.analog = None
 
     @property
     def keyword(self) -> str:
@@ -44,8 +45,9 @@ class ParserFonwall:
         if len(self.links):
             self._parse_status ^= True
 
-    def parse(self, keyword: str) -> None:
+    def parse(self, keyword: str, analog) -> None:
         self.links.keyword = keyword
+        self.links.analog = analog
         url_key = ParserFonwall.URL + keyword
         try:
             self.__parse_pages(url_key)
@@ -94,13 +96,16 @@ class DownloaderFonwall(ParserFonwall):
         super().__init__()
         self.images_topic_path: Optional[str] = None
 
-    def parse(self, keyword: str) -> None:
+    def parse(self, keyword: str, analog=None) -> None:
         try:
-            super().parse(keyword)
+            super().parse(keyword, analog)
         except:
             pass
+        volume = self.links.slug_keyword
+        if analog:
+            volume = analog
         self.images_topic_path = os.path.join(topics_abs,
-                                              self.links.slug_keyword)
+                                              volume)
 
     def download_from_cache(self) -> None:
         if not self.parse_status:
@@ -120,17 +125,21 @@ class DownloaderFonwall(ParserFonwall):
         photo_path = f'{self.images_topic_path}/{photo_name}'
         with open(photo_path, "wb") as image_file:
             content = self.__get_image_content(image_link)
-            image_file.write(content)
+            if content:
+                image_file.write(content)
 
     def __get_image_content(self, image_link: str) -> bytes:
-        request = requests.get(image_link)
-        content = request.content
-        return content
+        try:
+            request = requests.get(image_link)
+            content = request.content
+            return content
+        except:
+            pass
 
     def __make_topic_volume(self) -> None:
         if not os.path.exists(topics_abs):
             os.mkdir(topics_abs)
-        if self.links.slug_keyword not in os.listdir(topics_abs):
+        if not os.path.exists(self.images_topic_path):
             os.mkdir(self.images_topic_path)
 
     def get_images_in_volume(self) -> List[str]:
