@@ -1,15 +1,12 @@
 import os
 import random
 import re
-from random import random
 from typing import Iterable, Optional, Tuple, Union
 
 from PIL import Image
-from settings.config import (DISCR_BLOCK, RES_VOLUME, RESIZED_POSTFIX,
-                             RESULT_POSTFIX, RGB_SIZE, TEMP_VOLUME,
-                             TEMPLATE_POSTFIX, TOPICS_VOLUME, blocks_cnt,
-                             content_abs, mini_size, results_abs, temp_abs,
-                             topics, topics_abs)
+from settings.config import (DISCR_BLOCK, RESIZED_POSTFIX, RESULT_POSTFIX,
+                             TEMPLATE_POSTFIX, blocks_cnt, mini_size,
+                             results_abs, temp_abs, topics_abs)
 
 from .db_handler import ImagerDB
 
@@ -40,8 +37,10 @@ class ImageAlgs:
             [
                 [
                     list() for _ in range(blocks_cnt)]
-                for _ in range(blocks_cnt)]
-            for _ in range(blocks_cnt)]
+                for _ in range(blocks_cnt)
+            ]
+            for _ in range(blocks_cnt)
+        ]
         for image in images:
             r_discr = image[0] // DISCR_BLOCK
             g_discr = image[1] // DISCR_BLOCK
@@ -192,10 +191,16 @@ class ImagerEngine(ImageAlgs):
             # SAVE RESIZED MAIN, FOR AVG PIXELS
             width = main_img.size[0]
             height = main_img.size[1]
-            resized_img = main_img.resize((
-                new_image_size,
-                int(new_image_size * height / width)
-            ))
+            if width > height:
+                resized_img = main_img.resize((
+                    new_image_size,
+                    int(new_image_size * height / width)
+                ))
+            else:
+                resized_img = main_img.resize((
+                    int(new_image_size * width / height),
+                    new_image_size
+                ))
             resized_path = os.path.join(temp_abs,
                                         main_img_name + RESIZED_POSTFIX)
             resized_img.save(resized_path)

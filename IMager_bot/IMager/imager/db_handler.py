@@ -59,8 +59,9 @@ class ImagerDB:
             print(e)
 
     def _get_rgb_attrs(self, image_path: str):
-        image = Image.open(image_path)
-        return image.resize((1, 1)).load()
+        with Image.open(image_path) as image:
+            avg_rgb = image.resize((1, 1)).load()
+        return avg_rgb
 
     def __passing_keyword_images(self, keyword: str) -> None:
         kw_volume = os.path.join(topics_abs, keyword)

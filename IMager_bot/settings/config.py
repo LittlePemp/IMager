@@ -25,6 +25,7 @@ new_image_sizes = {
     'Большое': 100,
     'Очень большое': 150
 }
+DEL_MODE = False  # Удаляет созданные файлы
 
 # TG VOLUMES
 USERS_IMAGES = 'users_images'

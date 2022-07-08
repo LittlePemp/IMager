@@ -1,13 +1,14 @@
 import os
-import time
+import re
 from datetime import datetime
 
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from IMager.imager.model import ImagerModel
-from settings.config import (host_platform, new_image_sizes, noise_degrees,
-                             topics, users_images_abs)
+from settings.config import (DEL_MODE, RESIZED_POSTFIX, RESULT_POSTFIX,
+                             TEMPLATE_POSTFIX, host_platform, new_image_sizes,
+                             noise_degrees, topics, users_images_abs)
 from tg_bot.keyboards import (common_keyboard, new_image_size_keyboard,
                               noise_degrees_keyboard, topic_keyboard)
 
@@ -103,7 +104,10 @@ async def read_image(message: types.Message, state: FSMContext):
             data['image_path'] = image_path
             await message.reply('Фото успешно загружено. Ожидайте...')
             new_image_path = im.get_new_image(data)
+            await message.answer('Картинка собрана! Загружаем...')
             await send_new_image(message, new_image_path)
+            if DEL_MODE:
+                clean_volumes(image_path)
         waited_buff.remove(user_id)
         await state.finish()
 
@@ -123,6 +127,23 @@ async def download_image(message: types.Message):
     image_path = now.strftime(name_format)
     await message.photo[2].download(destination_file=image_path)  # [2] is LQ
     return image_path
+
+
+def clean_volumes(image_path):
+    semi_path = re.search(r'.*?(?=\.)', image_path).group(0)
+    rm_applicants = list(image_path)
+    rm_applicants.append(os.path.join(semi_path, TEMPLATE_POSTFIX))
+    rm_applicants.append(os.path.join(semi_path, RESIZED_POSTFIX))
+    rm_applicants.append(os.path.join(semi_path, RESULT_POSTFIX))
+    for applicant in rm_applicants:
+        if os.path.exists(applicant):
+            try:
+                os.remove(applicant)
+            except PermissionError:
+                print('Проверьте уровни доступа.'
+                      ' Иначе переключите DEL_MODE = False')
+            except:
+                print('Не получется удалить файлы(')
 
 
 def register_handlers(dp: Dispatcher):
