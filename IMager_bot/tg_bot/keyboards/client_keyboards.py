@@ -1,5 +1,5 @@
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
-from settings.config import topics, noise_degrees, new_image_sizes
+from settings.config import new_image_sizes, noise_degrees, topics
 
 to_start_button = KeyboardButton('В начало')
 

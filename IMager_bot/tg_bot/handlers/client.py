@@ -110,9 +110,12 @@ async def read_image(message: types.Message, state: FSMContext):
 
 async def send_new_image(message: types.Message, new_image_path: str):
     try:
-        await message.answer_document(open(new_image_path, 'rb'), reply_markup=common_keyboard)
+        with open(new_image_path, 'rb') as sending_img:
+            await message.answer_document(sending_img,
+                                          reply_markup=common_keyboard)
     except:
-        await message.answer('Что-то не получилоссь... Повторите позже.', reply_markup=common_keyboard)
+        await message.answer('Что-то не получилоссь... Повторите позже.',
+                             reply_markup=common_keyboard)
 
 
 async def download_image(message: types.Message):

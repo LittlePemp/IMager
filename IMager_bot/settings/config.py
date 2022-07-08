@@ -10,9 +10,21 @@ CONTENT_VOLUME = 'content'
 content_abs = abspath('content')
 
 # TG KEYBOARDS
-topics = {'Котики': 'koty', 'Аниме': 'anime'}
-noise_degrees = {'Нет': (0, 0), 'Среднее': (30, 50), 'Сильно': (60, 100)}
-new_image_sizes = {'Маленькое': 25, 'Среднее': 50, 'Большое': 100, 'Очень большое': 150}
+topics = {
+    'Котики': 'koty',
+    'Аниме': 'anime'
+}
+noise_degrees = {
+    'Нет': (0, 0),
+    'Среднее': (30, 50),
+    'Сильно': (60, 100)
+}
+new_image_sizes = {
+    'Маленькое': 25,
+    'Среднее': 50,
+    'Большое': 100,
+    'Очень большое': 150
+}
 
 # TG VOLUMES
 USERS_IMAGES = 'users_images'

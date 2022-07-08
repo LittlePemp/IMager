@@ -26,15 +26,15 @@ class ImageAlgs:
             print(e)
 
     def get_near_image(self,
-                    main_point: list[Union[int, str]],
-                    noise_degree=(0, 0)
-                    ) -> str:
+                       main_point: list[Union[int, str]],
+                       noise_degree=(0, 0)
+                       ) -> str:
         near_point = self.__discr_search(main_point, noise_degree)
         near_point_name = near_point[3]
         return near_point_name
 
     def load_in_hash(self, topic_kw
-                    ) -> list[list[list[list[Union[int, str]]]]]:
+                     ) -> list[list[list[list[Union[int, str]]]]]:
         images: list[tuple[int, int, int, str]] = idb.get_images(topic_kw)
         self.images_hash = [
             [
@@ -50,48 +50,56 @@ class ImageAlgs:
         return self.images_hash
 
     def __pythagorean_range(self, first_point: list[Union[int, str]],
-                        second_point: list[Union[int, str]],
-                        noise_degree=(0, 0)
-                        ) -> bool:
+                            second_point: list[Union[int, str]],
+                            noise_degree=(0, 0)
+                            ) -> bool:
         noise_slice = random.randint(noise_degree[0], noise_degree[1])
         return abs(((first_point[0] - second_point[0])**2
-                + (first_point[1] - second_point[1])**2
-                + (first_point[2] - second_point[2])**2)**(1/2)
-                - noise_slice)
+                   + (first_point[1] - second_point[1])**2
+                   + (first_point[2] - second_point[2])**2)**(1 / 2)
+                   - noise_slice)
 
     def __pythagorean_search(self, main_point: list[Union[int, str]],
-                        applicants: Iterable[list[Union[int, str]]],
-                        noise_degree=(0, 0)
-                        ) -> list[Union[int, str]]:
+                             applicants: Iterable[list[Union[int, str]]],
+                             noise_degree=(0, 0)
+                             ) -> list[Union[int, str]]:
         suit_point = applicants[0]
-        suit_range = self.__pythagorean_range(main_point, suit_point, noise_degree)
+        suit_range = self.__pythagorean_range(main_point,
+                                              suit_point,
+                                              noise_degree)
         for applicant in applicants[1:]:
-            applicant_range = self.__pythagorean_range(main_point, applicant, noise_degree)
+            applicant_range = self.__pythagorean_range(main_point,
+                                                       applicant,
+                                                       noise_degree)
             if applicant_range < suit_range:
                 suit_range = applicant_range
                 suit_point = applicant
         return suit_point
 
     def __discr_search(self, main_point: list[Union[int, str]],
-                    noise_degree) -> list[Union[int, str]]:
+                       noise_degree) -> list[Union[int, str]]:
         r_main_discr = main_point[0] // DISCR_BLOCK
         g_main_discr = main_point[1] // DISCR_BLOCK
         b_main_discr = main_point[2] // DISCR_BLOCK
-        discr_applicants = self.images_hash[r_main_discr][g_main_discr][b_main_discr]
+        discr_applicants = (
+            self.images_hash[r_main_discr][g_main_discr][b_main_discr]
+        )
         rgb_vector = [r_main_discr, g_main_discr, b_main_discr]
         expand_deep = 0
         while not discr_applicants:
             expand_deep += 1
             self.__expand_applicants(discr_applicants,
-                            rgb_vector,
-                            expand_deep)
-        near_point = self.__pythagorean_search(main_point, discr_applicants, noise_degree)
+                                     rgb_vector,
+                                     expand_deep)
+        near_point = self.__pythagorean_search(main_point,
+                                               discr_applicants,
+                                               noise_degree)
         return near_point
 
     def __expand_applicants(self, applicants: list[list[Union[int, str]]],
-                        rgb_vector: list[int],
-                        expand_deep: int
-                        ) -> None:
+                            rgb_vector: list[int],
+                            expand_deep: int
+                            ) -> None:
         ''' Расширяем область в 3д '''
         for dim1_passing in range(-expand_deep, expand_deep + 1):
             for dim2_passing in range(-expand_deep, expand_deep + 1):
@@ -99,14 +107,16 @@ class ImageAlgs:
                     new_area = [rgb_vector[0] + dim1_passing,
                                 rgb_vector[1] + dim2_passing,
                                 rgb_vector[2] + dim3_passing]
-                    if self.__expand_correct(new_area, rgb_vector, expand_deep):
+                    if self.__expand_correct(new_area,
+                                             rgb_vector,
+                                             expand_deep):
                         applicants.extend(
                             self.images_hash[new_area[0]][new_area[1]][new_area[2]])
 
     def __expand_correct(self, new_area: list[int],
-                    rgb_vector: list[int],
-                    expand_deep: int
-                    ) -> bool:
+                         rgb_vector: list[int],
+                         expand_deep: int
+                         ) -> bool:
         ''' Проверка на возможность расширения.
         1. Не выходит за рамки
         2. Не добавляет имеющиеся области '''
@@ -132,11 +142,15 @@ class ImageAlgs:
 
 class ImagerEngine(ImageAlgs):
     def __init__(self, topic_kw):
-        self.images_hash: list[list[list[list[Union[int, str]]]]] = self.load_in_hash(topic_kw)
+        self.images_hash = self.load_in_hash(topic_kw)
         self.opened_images = {
             img_name:
-                Image.open(os.path.join(topics_abs, topic_kw, img_name)).resize((mini_size, mini_size))
-                    for img_name in [img_info[3] for img_info in idb.get_images(topic_kw)]
+                Image.open(os.path.join(topics_abs,
+                                        topic_kw,
+                                        img_name)).resize((mini_size,
+                                                           mini_size))
+            for img_name in
+                [img_info[3] for img_info in idb.get_images(topic_kw)]
         }
         self.topic_kw = topic_kw
 
@@ -147,14 +161,17 @@ class ImagerEngine(ImageAlgs):
 
     def fill_template(self, noise_degree, main_path):
         main_img_name = re.search(r'([^/\\&\?]+)\.[^.]+$', main_path).group(1)
-        resized_path = os.path.join(temp_abs, main_img_name + RESIZED_POSTFIX)
-        template_path = os.path.join(temp_abs, main_img_name + TEMPLATE_POSTFIX)
-        result_path = os.path.join(results_abs, main_img_name + RESULT_POSTFIX)
+        resized_path = os.path.join(temp_abs,
+                                    main_img_name + RESIZED_POSTFIX)
+        template_path = os.path.join(temp_abs,
+                                     main_img_name + TEMPLATE_POSTFIX)
+        result_path = os.path.join(results_abs,
+                                   main_img_name + RESULT_POSTFIX)
         # GET PIX INFOS
         with Image.open(resized_path) as resized_img:
-              width = resized_img.size[0]
-              height = resized_img.size[1]
-              pixels = resized_img.load()
+            width = resized_img.size[0]
+            height = resized_img.size[1]
+            pixels = resized_img.load()
         # SEARCH ADN PASTE IMAGES
         with Image.open(template_path) as template_img:
             for x in range(width):
@@ -177,14 +194,16 @@ class ImagerEngine(ImageAlgs):
             height = main_img.size[1]
             resized_img = main_img.resize((
                 new_image_size,
-                int(new_image_size * height/width)
+                int(new_image_size * height / width)
             ))
-            resized_path = os.path.join(temp_abs, main_img_name + RESIZED_POSTFIX)
+            resized_path = os.path.join(temp_abs,
+                                        main_img_name + RESIZED_POSTFIX)
             resized_img.save(resized_path)
 
             # SAVE TEMPLATE
             imager_w = resized_img.size[0] * mini_size
             imager_h = resized_img.size[1] * mini_size
             template = Image.new('RGB', (imager_w, imager_h))
-            template_path = os.path.join(temp_abs, main_img_name + TEMPLATE_POSTFIX)
+            template_path = os.path.join(temp_abs,
+                                         main_img_name + TEMPLATE_POSTFIX)
             template.save(template_path)
