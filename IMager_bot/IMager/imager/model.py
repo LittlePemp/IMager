@@ -3,11 +3,12 @@ from typing import Optional, Tuple
 
 from PIL import Image
 from settings.config import (RES_VOLUME, TEMP_VOLUME, TOPICS_VOLUME,
-                             content_abs, results_abs, temp_abs, topics, topics_abs, noise_degrees, new_image_sizes)
+                             content_abs, new_image_sizes, noise_degrees,
+                             results_abs, temp_abs, topics, topics_abs)
 
 from .db_handler import ImagerDB
-from .parse import DownloaderFonwall
 from .image_assembly import ImagerEngine
+from .parse import DownloaderFonwall
 
 
 class ImagerModel:

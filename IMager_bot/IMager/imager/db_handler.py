@@ -1,9 +1,9 @@
-import sqlite3
 import os
-from PIL import Image
+import sqlite3
 from typing import Optional
 
-from settings.config import DB_NAME, db_abs, content_abs, topics_abs
+from PIL import Image
+from settings.config import DB_NAME, content_abs, db_abs, topics_abs
 
 
 class ImagerDB:

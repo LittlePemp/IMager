@@ -1,14 +1,17 @@
-from random import random
-import re
-from typing import Optional, Tuple, Union, Iterable
-
-import random
-from PIL import Image
-from settings.config import (RES_VOLUME, TEMP_VOLUME, TOPICS_VOLUME, RGB_SIZE, DISCR_BLOCK, blocks_cnt, TEMPLATE_POSTFIX, RESULT_POSTFIX, RESIZED_POSTFIX,
-    content_abs, results_abs, temp_abs, topics_abs, topics, mini_size)
-from .db_handler import ImagerDB
 import os
+import random
+import re
+from random import random
+from typing import Iterable, Optional, Tuple, Union
 
+from PIL import Image
+from settings.config import (DISCR_BLOCK, RES_VOLUME, RESIZED_POSTFIX,
+                             RESULT_POSTFIX, RGB_SIZE, TEMP_VOLUME,
+                             TEMPLATE_POSTFIX, TOPICS_VOLUME, blocks_cnt,
+                             content_abs, mini_size, results_abs, temp_abs,
+                             topics, topics_abs)
+
+from .db_handler import ImagerDB
 
 idb = ImagerDB()
 

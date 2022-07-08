@@ -5,10 +5,11 @@ from datetime import datetime
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from settings.config import host_platform, topics, users_images_abs, noise_degrees, new_image_sizes
-from tg_bot.keyboards import (common_keyboard, noise_degrees_keyboard,
-                              topic_keyboard, new_image_size_keyboard)
 from IMager.imager.model import ImagerModel
+from settings.config import (host_platform, new_image_sizes, noise_degrees,
+                             topics, users_images_abs)
+from tg_bot.keyboards import (common_keyboard, new_image_size_keyboard,
+                              noise_degrees_keyboard, topic_keyboard)
 
 uncorrect_answer = 'Пожалуйста, выберите из предложенного'
 if 'win' in host_platform:

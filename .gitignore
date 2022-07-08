@@ -2,6 +2,6 @@
 *.env
 *images_volume
 *mypy*
-*tester*.py
+*test*.py
 *users_photos*
 *content/*

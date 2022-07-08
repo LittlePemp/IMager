@@ -1,7 +1,6 @@
 import sys
 from os.path import abspath, join
 
-
 # sys settings
 host_platform = sys.platform
 dotenv_path = join(abspath(''), '.env')
