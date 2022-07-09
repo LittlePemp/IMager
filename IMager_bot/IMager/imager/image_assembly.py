@@ -158,7 +158,7 @@ class ImagerEngine(ImageAlgs):
         new_img_path = self.fill_template(noise_degree, main_path)
         return new_img_path
 
-    def fill_template(self, noise_degree, main_path):
+    def fill_template(self, noise_degree, main_path, filter_degree=100):
         main_img_name = re.search(r'([^/\\&\?]+)\.[^.]+$', main_path).group(1)
         resized_path = os.path.join(temp_abs,
                                     main_img_name + RESIZED_POSTFIX)
@@ -166,13 +166,14 @@ class ImagerEngine(ImageAlgs):
                                      main_img_name + TEMPLATE_POSTFIX)
         result_path = os.path.join(results_abs,
                                    main_img_name + RESULT_POSTFIX)
-        # GET PIX INFOS
-        with Image.open(resized_path) as resized_img:
+        # SEARCH ADN PASTE IMAGES
+        with (Image.open(template_path) as template_img,
+              Image.open(resized_path) as resized_img):
+            # PIXELS INFO
             width = resized_img.size[0]
             height = resized_img.size[1]
             pixels = resized_img.load()
-        # SEARCH ADN PASTE IMAGES
-        with Image.open(template_path) as template_img:
+            # FILL TEMPLATE
             for x in range(width):
                 for y in range(height):
                     pixel = pixels[x, y]
@@ -181,9 +182,14 @@ class ImagerEngine(ImageAlgs):
                         self.opened_images[near_img],
                         (mini_size * x, mini_size * y)
                     )
+            # ADD FILTER BY RESIZED
+            big_orig = resized_img.resize((template_img.size[0],
+                                           template_img.size[1]))
+            big_orig = big_orig.convert('RGBA')
+            big_orig.putalpha(filter_degree)
+            template_img.paste(big_orig, (0, 0), big_orig)
             template_img.save(result_path)
         return result_path
-        # FILTRATE
 
     def imager_preperation(self, new_image_size, main_path):
         main_img_name = re.search(r'([^/\\&\?]+)\.[^.]+$', main_path).group(1)
