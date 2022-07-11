@@ -1,5 +1,4 @@
 import sys
-import math
 from os.path import abspath, join
 
 # sys settings

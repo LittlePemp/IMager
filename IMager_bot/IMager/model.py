@@ -1,6 +1,6 @@
+import asyncio
 import os
 
-from PIL import Image
 from settings.config import (RES_VOLUME, TEMP_VOLUME, TOPICS_VOLUME,
                              content_abs, new_image_sizes, noise_degrees,
                              results_abs, temp_abs, topics, topics_abs)
@@ -14,7 +14,7 @@ class ImagerModel:
         self.ies = self.__get_imager_engines()
         self.__dirs_tree_init()
 
-    def get_new_image(self, data):
+    async def get_new_image(self, data):
         try:
             topic_kw = topics[data['topic_name']]
             noise_degree = noise_degrees[data['noise_degree']]
@@ -22,6 +22,7 @@ class ImagerModel:
             user_image_path = data['image_path']
         except:
             return None
+        await asyncio.sleep(10)
         new_image_path = self.ies[topic_kw].make_image(noise_degree,
                                                        new_image_size,
                                                        user_image_path)

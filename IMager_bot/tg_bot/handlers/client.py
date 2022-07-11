@@ -1,3 +1,4 @@
+import asyncio
 import os
 import re
 from datetime import datetime
@@ -103,7 +104,8 @@ async def read_image(message: types.Message, state: FSMContext):
             image_path = await download_image(message)
             data['image_path'] = image_path
             await message.reply('Фото успешно загружено. Ожидайте...')
-            new_image_path = im.get_new_image(data)
+            get_new_image_task = asyncio.create_task(im.get_new_image(data))
+            new_image_path = await get_new_image_task
             await message.answer('Картинка собрана! Загружаем...')
             await send_new_image(message, new_image_path)
             if DEL_MODE:
