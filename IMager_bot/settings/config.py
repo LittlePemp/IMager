@@ -1,4 +1,5 @@
 import sys
+import math
 from os.path import abspath, join
 
 # sys settings
@@ -17,8 +18,8 @@ topics = {
 }
 noise_degrees = {
     'Нет': (0, 0),
-    'Среднее': (30, 50),
-    'Сильно': (60, 100),
+    'Среднее': (0, 12),
+    'Сильно': (12, 30),
 }
 new_image_sizes = {
     'Маленькое': 25,
@@ -51,9 +52,9 @@ RESIZED_POSTFIX = 'rz.png'
 RESULT_POSTFIX = 'res.png'
 TEMPLATE_POSTFIX = 'tmpl.png'
 RGB_SIZE = 256
-DISCR_BLOCK = 32
+DISCR_BLOCK = 128
 mini_size = 50
-blocks_cnt = RGB_SIZE // DISCR_BLOCK
+blocks_cnt = RGB_SIZE // DISCR_BLOCK + 1
 
 # DB HANDLER
 DB_NAME = 'imager.db'

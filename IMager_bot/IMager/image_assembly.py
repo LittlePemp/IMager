@@ -16,7 +16,7 @@ idb = ImagerDB()
 class ImageAlgs:
     def get_avg_colors(self, image_path: str) -> Optional[Tuple[int]]:
         try:
-            rgb = self._get_rgb_attrs(image_path)
+            rgb = self.__get_rgb_attrs(image_path)
             attrs = (rgb[0, 0][0], rgb[0, 0][1], rgb[0, 0][2])
             return attrs
         except Exception as e:
@@ -24,9 +24,10 @@ class ImageAlgs:
 
     def get_near_image(self,
                        main_point: list[Union[int, str]],
-                       noise_degree=(0, 0)
+                       noise_degree
                        ) -> str:
-        near_point = self.__discr_search(main_point, noise_degree)
+        main_point = self.__change_point(main_point, noise_degree)
+        near_point = self.__discr_search(main_point)
         near_point_name = near_point[3]
         return near_point_name
 
@@ -50,33 +51,28 @@ class ImageAlgs:
 
     def __pythagorean_range(self, first_point: list[Union[int, str]],
                             second_point: list[Union[int, str]],
-                            noise_degree=(0, 0)
                             ) -> bool:
-        noise_slice = random.randint(noise_degree[0], noise_degree[1])
         return abs(((first_point[0] - second_point[0])**2
                    + (first_point[1] - second_point[1])**2
-                   + (first_point[2] - second_point[2])**2)**(1 / 2)
-                   - noise_slice)
+                   + (first_point[2] - second_point[2])**2)**(1 / 2))
 
     def __pythagorean_search(self, main_point: list[Union[int, str]],
-                             applicants: Iterable[list[Union[int, str]]],
-                             noise_degree=(0, 0)
+                             applicants: Iterable[list[Union[int, str]]]
                              ) -> list[Union[int, str]]:
         suit_point = applicants[0]
         suit_range = self.__pythagorean_range(main_point,
-                                              suit_point,
-                                              noise_degree)
+                                              suit_point)
         for applicant in applicants[1:]:
             applicant_range = self.__pythagorean_range(main_point,
-                                                       applicant,
-                                                       noise_degree)
+                                                       applicant)
             if applicant_range < suit_range:
                 suit_range = applicant_range
                 suit_point = applicant
         return suit_point
 
-    def __discr_search(self, main_point: list[Union[int, str]],
-                       noise_degree) -> list[Union[int, str]]:
+    def __discr_search(self,
+                       main_point: list[Union[int, str]]
+                       ) -> list[Union[int, str]]:
         r_main_discr = main_point[0] // DISCR_BLOCK
         g_main_discr = main_point[1] // DISCR_BLOCK
         b_main_discr = main_point[2] // DISCR_BLOCK
@@ -91,8 +87,7 @@ class ImageAlgs:
                                      rgb_vector,
                                      expand_deep)
         near_point = self.__pythagorean_search(main_point,
-                                               discr_applicants,
-                                               noise_degree)
+                                               discr_applicants)
         return near_point
 
     def __expand_applicants(self, applicants: list[list[Union[int, str]]],
@@ -133,7 +128,19 @@ class ImageAlgs:
         verdict = in_frame and not_repeat
         return verdict
 
-    def _get_rgb_attrs(self, image_path: str):
+    def __change_point(self, main_point, noise_degree):
+        changed_point = list()
+        for param_id in range(len(main_point)):
+            new_val = abs(main_point[param_id]
+                          + (random.choice([-1, 1])
+                             * random.randint(noise_degree[0],
+                                              noise_degree[1])))
+            if new_val >= 255:
+                new_val = 255
+            changed_point.append(new_val)
+        return changed_point
+
+    def __get_rgb_attrs(self, image_path: str):
         with Image.open(image_path) as image:
             rgb_attrs = image.resize((1, 1)).load()
         return rgb_attrs
@@ -158,7 +165,7 @@ class ImagerEngine(ImageAlgs):
         new_img_path = self.fill_template(noise_degree, main_path)
         return new_img_path
 
-    def fill_template(self, noise_degree, main_path, filter_degree=100):
+    def fill_template(self, noise_degree, main_path, filter_degree=125):
         main_img_name = re.search(r'([^/\\&\?]+)\.[^.]+$', main_path).group(1)
         resized_path = os.path.join(temp_abs,
                                     main_img_name + RESIZED_POSTFIX)
@@ -207,6 +214,7 @@ class ImagerEngine(ImageAlgs):
                     int(new_image_size * width / height),
                     new_image_size
                 ))
+
             resized_path = os.path.join(temp_abs,
                                         main_img_name + RESIZED_POSTFIX)
             resized_img.save(resized_path)

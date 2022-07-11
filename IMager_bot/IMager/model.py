@@ -1,23 +1,33 @@
 import os
-from typing import Optional, Tuple
 
 from PIL import Image
 from settings.config import (RES_VOLUME, TEMP_VOLUME, TOPICS_VOLUME,
                              content_abs, new_image_sizes, noise_degrees,
                              results_abs, temp_abs, topics, topics_abs)
-
-from .db_handler import ImagerDB
 from .image_assembly import ImagerEngine
 from .parse import DownloaderFonwall
 
 
 class ImagerModel:
     def __init__(self) -> None:
-        self.__dirs_tree_init()
         self.parser = DownloaderFonwall()
-        self.ies = self.get_imager_engines()
+        self.ies = self.__get_imager_engines()
+        self.__dirs_tree_init()
 
-    def get_imager_engines(self):
+    def get_new_image(self, data):
+        try:
+            topic_kw = topics[data['topic_name']]
+            noise_degree = noise_degrees[data['noise_degree']]
+            new_image_size = new_image_sizes[data['new_image_size']]
+            user_image_path = data['image_path']
+        except:
+            return None
+        new_image_path = self.ies[topic_kw].make_image(noise_degree,
+                                                       new_image_size,
+                                                       user_image_path)
+        return new_image_path
+
+    def __get_imager_engines(self):
         ies = dict()
         print('Начинаем прогрузку в оперативу')
         for topic_kw in topics.values():
@@ -25,16 +35,6 @@ class ImagerModel:
             print(f'{topic_kw} прогружены')
         print('Все фото прогружены в оперативку')
         return ies
-
-    def get_new_image(self, data):
-        topic_kw = topics[data['topic_name']]
-        noise_degree = noise_degrees[data['noise_degree']]
-        new_image_size = new_image_sizes[data['new_image_size']]
-        user_image_path = data['image_path']
-        new_image_path = self.ies[topic_kw].make_image(noise_degree,
-                                                       new_image_size,
-                                                       user_image_path)
-        return new_image_path
 
     def __dirs_tree_init(self) -> None:
         content_content = os.listdir(content_abs)
