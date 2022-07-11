@@ -13,8 +13,7 @@ from .parse import DownloaderFonwall
 
 class ImagerModel:
     def __init__(self) -> None:
-        self.dirs_tree_init()
-        self.idb = ImagerDB()
+        self.__dirs_tree_init()
         self.parser = DownloaderFonwall()
         self.ies = self.get_imager_engines()
 
@@ -37,13 +36,7 @@ class ImagerModel:
                                                        user_image_path)
         return new_image_path
 
-    def get_new_images(self, keyword: str) -> None:
-        self.parser.parse(keyword)
-        self.parser.download_from_cache()
-        keyword = self.parser.links.slug_keyword
-        self.idb.fill_db(keyword)
-
-    def dirs_tree_init(self) -> None:
+    def __dirs_tree_init(self) -> None:
         content_content = os.listdir(content_abs)
         if TOPICS_VOLUME not in content_content:
             os.mkdir(topics_abs)

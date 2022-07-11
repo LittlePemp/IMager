@@ -13,6 +13,7 @@ content_abs = abspath('content')
 topics = {
     'Котики': 'koty',
     'Аниме': 'anime',
+    'Дота': 'dota',
 }
 noise_degrees = {
     'Нет': (0, 0),
@@ -32,7 +33,7 @@ users_images_abs = join(content_abs, USERS_IMAGES)
 
 # PARSER VOLUMES
 IMG_VOLUMES_NAME = 'images_volume'
-img_bolumes_abs = join(content_abs, IMG_VOLUMES_NAME)
+img_volumes_abs = join(content_abs, IMG_VOLUMES_NAME)
 
 # IMAGER VOLUMES
 TEMP_VOLUME = 'TEMP'

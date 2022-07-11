@@ -11,7 +11,6 @@ class ImagerDB:
         self.db_init()
         self.connection = sqlite3.connect(db_abs)
         self.cursor = self.connection.cursor()
-        print('Прогружена БД')
 
     def db_init(self):
         if DB_NAME not in os.listdir(content_abs):
@@ -50,6 +49,17 @@ class ImagerDB:
         result = self.cursor.fetchall()
         return result
 
+    def get_tables(self):
+        request_text = "SELECT name FROM sqlite_master WHERE type='table';"
+        self.cursor.execute(request_text)
+        tables = [response[0] for response in self.cursor.fetchall()]
+        return tables
+
+    def _get_rgb_attrs(self, image_path: str):
+        with Image.open(image_path) as image:
+            avg_rgb = image.resize((1, 1)).load()
+        return avg_rgb
+
     def __get_avg_colors(self, image_path: str) -> Optional[tuple[int]]:
         try:
             rgb = self._get_rgb_attrs(image_path)
@@ -57,11 +67,6 @@ class ImagerDB:
             return attrs
         except Exception as e:
             print(e)
-
-    def _get_rgb_attrs(self, image_path: str):
-        with Image.open(image_path) as image:
-            avg_rgb = image.resize((1, 1)).load()
-        return avg_rgb
 
     def __passing_keyword_images(self, keyword: str) -> None:
         kw_volume = os.path.join(topics_abs, keyword)

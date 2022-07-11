@@ -5,7 +5,7 @@ from datetime import datetime
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from IMager.imager.model import ImagerModel
+from IMager.model import ImagerModel
 from settings.config import (DEL_MODE, RESIZED_POSTFIX, RESULT_POSTFIX,
                              TEMPLATE_POSTFIX, host_platform, new_image_sizes,
                              noise_degrees, topics, users_images_abs)
