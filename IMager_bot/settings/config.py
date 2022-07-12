@@ -5,7 +5,12 @@ from os.path import abspath, join
 # sys settings
 host_platform = sys.platform
 dotenv_path = join(abspath(''), '.env')
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    filename='log.log',
+    encoding='utf-8',
+    format="[%(asctime)s][%(name)s.%(funcName)s]%(levelname)s: %(message)s",
+    datefmt="%d/%b/%Y %H:%M:%S")
 
 # GENERAL
 CONTENT_VOLUME = 'content'

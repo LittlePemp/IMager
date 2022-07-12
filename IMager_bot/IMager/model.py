@@ -32,7 +32,7 @@ class ImagerModel:
             logger.info(f'Изображение собрано: ({new_image_path})')
             return new_image_path
         except:
-            logger.warning(f'Ошибка {data}')
+            logger.error(f'Ошибка {data}')
             return None
 
     def __get_imager_engines(self):

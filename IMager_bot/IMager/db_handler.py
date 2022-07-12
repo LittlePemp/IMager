@@ -31,7 +31,7 @@ class ImagerDB:
             logger.info(f'Таблица ({table_name}) успешно создана')
             self.cursor.execute(request_text)
         except Exception as er:
-            logger.error(f'ошибка создания таблицы {table_name}: {er}')
+            logger.error(f'Ошибка создания таблицы {table_name}: {er}')
 
     def db_delete(self) -> None:
         try:
