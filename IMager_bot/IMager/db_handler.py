@@ -6,7 +6,6 @@ from typing import Optional
 from PIL import Image
 from settings.config import DB_NAME, content_abs, db_abs, topics_abs
 
-
 logger = logging.getLogger(__name__)
 
 

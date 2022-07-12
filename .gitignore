@@ -2,7 +2,7 @@
 *.env
 *images_volume
 *mypy*
-*test*.py
+*tester*.py
 *users_photos*
 *content/*
 *.log
