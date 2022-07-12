@@ -1,9 +1,13 @@
+import logging
 import os
 import sqlite3
 from typing import Optional
 
 from PIL import Image
 from settings.config import DB_NAME, content_abs, db_abs, topics_abs
+
+
+logger = logging.getLogger(__name__)
 
 
 class ImagerDB:
@@ -15,28 +19,34 @@ class ImagerDB:
     def db_init(self):
         if DB_NAME not in os.listdir(content_abs):
             with open(db_abs, 'w') as _:
-                print('Создана БД')
+                logger.info('Создана БД')
 
     def create_table(self, table_name: str) -> None:
-        request_text = (f'CREATE TABLE IF NOT EXISTS {table_name}('
-                        'r INTEGER NOT NULL,'
-                        'g INTEGER NOT NULL,'
-                        'b INTEGER NOT NULL,'
-                        'img_name TEXT PRIMARY KEY);')
-        self.cursor.execute(request_text)
+        try:
+            request_text = (f'CREATE TABLE IF NOT EXISTS {table_name}('
+                            'r INTEGER NOT NULL,'
+                            'g INTEGER NOT NULL,'
+                            'b INTEGER NOT NULL,'
+                            'img_name TEXT PRIMARY KEY);')
+            logger.info(f'Таблица ({table_name}) успешно создана')
+            self.cursor.execute(request_text)
+        except Exception as er:
+            logger.error(f'ошибка создания таблицы {table_name}: {er}')
 
     def db_delete(self) -> None:
         try:
             os.remove(db_abs)
-        except:
-            pass
+            logger.info('Удалена БД')
+        except Exception as er:
+            logger.error(f'Ошибка удаления БД: {er}')
 
     def drop_table(self, table_name: str) -> None:
         request_text = f'DROP TABLE {table_name};'
         try:
             self.cursor.execute(request_text)
+            logger.info(f'Таблица ({table_name}) успешно удалена')
         except sqlite3.OperationalError:
-            pass
+            logger.error(f'Обшибка удаления таблицы - {table_name}')
 
     def fill_db(self, keyword: str) -> None:
         self.drop_table(keyword)
@@ -65,8 +75,8 @@ class ImagerDB:
             rgb = self._get_rgb_attrs(image_path)
             attrs = (rgb[0, 0][0], rgb[0, 0][1], rgb[0, 0][2])
             return attrs
-        except Exception as e:
-            print(e)
+        except Exception as er:
+            logger.warning(f'Ошибка чтения изображения ({image_path}): {er}')
 
     def __passing_keyword_images(self, keyword: str) -> None:
         kw_volume = os.path.join(topics_abs, keyword)
@@ -85,6 +95,6 @@ class ImagerDB:
                            f'VALUES {image_attrs}')
                 try:
                     self.cursor.execute(request)
-                except Exception as e:
-                    print(e)
+                except Exception as er:
+                    logger.error(f'Ошибка чтения таблицы: {er}')
         self.connection.commit()

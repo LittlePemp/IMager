@@ -1,11 +1,10 @@
-import logging
 import os
 
 from aiogram import Bot
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import Dispatcher
 from dotenv import load_dotenv
-from settings.config import dotenv_path
+from settings.config import dotenv_path, logging
 
 
 def get_dp():

@@ -1,7 +1,8 @@
+import importlib
 import os
 import sys
+
 import settings.command_exceptions as cexc
-import importlib
 
 
 def execute_from_command_line(args):
@@ -19,4 +20,4 @@ def execute_from_command_line(args):
 
 
 if __name__ == '__main__':
-    execute_from_command_line(sys.argv)    
+    execute_from_command_line(sys.argv)

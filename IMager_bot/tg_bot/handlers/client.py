@@ -1,4 +1,5 @@
 import asyncio
+import logging
 import os
 import re
 from datetime import datetime
@@ -12,6 +13,10 @@ from settings.config import (DEL_MODE, RESIZED_POSTFIX, RESULT_POSTFIX,
                              noise_degrees, topics, users_images_abs)
 from tg_bot.keyboards import (common_keyboard, new_image_size_keyboard,
                               noise_degrees_keyboard, topic_keyboard)
+
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 uncorrect_answer = 'Пожалуйста, выберите из предложенного'
 if 'win' in host_platform:
@@ -103,11 +108,15 @@ async def read_image(message: types.Message, state: FSMContext):
         async with state.proxy() as data:
             image_path = await download_image(message)
             data['image_path'] = image_path
+            data['user_id'] = user_id
             await message.reply('Фото успешно загружено. Ожидайте...')
             get_new_image_task = asyncio.create_task(im.get_new_image(data))
             new_image_path = await get_new_image_task
-            await message.answer('Картинка собрана! Загружаем...')
-            await send_new_image(message, new_image_path)
+            if new_image_path:
+                await message.answer('Картинка собрана! Загружаем...')
+                await send_new_image(message, new_image_path)
+            else:
+                await message.answer('Ошибка приложения, повторите позже...')
             if DEL_MODE:
                 clean_volumes(image_path)
         waited_buff.remove(user_id)
@@ -142,10 +151,10 @@ def clean_volumes(image_path):
             try:
                 os.remove(applicant)
             except PermissionError:
-                print('Проверьте уровни доступа.'
-                      ' Иначе переключите DEL_MODE = False')
+                logger.error('Проверьте уровни доступа.'
+                             ' Иначе переключите DEL_MODE = False')
             except:
-                print('Не получется удалить файлы(')
+                logger.error('Не получется удалить файлы(')
 
 
 def register_handlers(dp: Dispatcher):

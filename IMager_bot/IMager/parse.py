@@ -1,3 +1,4 @@
+import logging
 import os
 import shutil
 from typing import List, Optional
@@ -10,12 +11,15 @@ from transliterate import slugify
 from .exceptions.parse_exceptions import EmptyCacheError, NotImagesVolumesError
 
 
+logger = logging.getLogger(__name__)
+
+
 class Links(list):
     def __init__(self) -> None:
         super().__init__()
         self._keyword: Optional[str] = None
         self._slug_keyword: Optional[str] = None
-        self.analog = None
+        self._analog: Optional[str] = None
 
     @property
     def keyword(self) -> str:
@@ -25,11 +29,19 @@ class Links(list):
     def slug_keyword(self) -> str:
         return self._slug_keyword
 
+    @property
+    def analog(self) -> str:
+        return self._analog
+
     @keyword.setter
     def keyword(self, value: str) -> None:
         self._keyword = value
         #  Тут кринж из-за slugify, он не транслитит, если все трансы
         self._slug_keyword = slugify(self.keyword + 'А')[:-1]
+
+    @analog.setter
+    def analog(self, value: str) -> None:
+        self._analog = value
 
 
 class ParserFonwall:
@@ -41,10 +53,6 @@ class ParserFonwall:
         self.links = Links()
         self._parse_status: bool = False
 
-    def change_parse_status(self) -> None:
-        if len(self.links):
-            self._parse_status ^= True
-
     def parse(self, keyword: str, analog) -> None:
         self.links.keyword = keyword
         self.links.analog = analog
@@ -53,9 +61,13 @@ class ParserFonwall:
             self.__parse_pages(url_key)
         except:
             pass
-        print(f'Запарсено {len(self.links)}'
-              f' изображений - {self.links.keyword}')
-        self.change_parse_status()
+        logger.info(f'Запарсено {len(self.links)}'
+                    f' изображений - {self.links.keyword}')
+        self.__change_parse_status()
+
+    def __change_parse_status(self) -> None:
+        if len(self.links):
+            self._parse_status ^= True
 
     def __parse_pages(self, url_key: str) -> None:
         page_number = 0
@@ -99,8 +111,8 @@ class DownloaderFonwall(ParserFonwall):
     def parse(self, keyword: str, analog=None) -> None:
         try:
             super().parse(keyword, analog)
-        except:
-            pass
+        except Exception as er:
+            logger.warning(f'Остановка парсинга: {er}')
         volume = self.links.slug_keyword
         if analog:
             volume = analog
@@ -134,13 +146,16 @@ class DownloaderFonwall(ParserFonwall):
             content = request.content
             return content
         except:
-            pass
+            logger.warning('Ошибка чтения скачанного изображения: '
+                           f'{image_link}')
 
     def __make_topic_volume(self) -> None:
         if not os.path.exists(topics_abs):
             os.mkdir(topics_abs)
+            logger.info(f'Создан путь {topics_abs}')
         if not os.path.exists(self.images_topic_path):
             os.mkdir(self.images_topic_path)
+            logger.info(f'Создан путь {topics_abs}')
 
     def get_images_in_volume(self) -> List[str]:
         ''' /<photo_name> '''
@@ -156,4 +171,4 @@ class DownloaderFonwall(ParserFonwall):
             raise NotImagesVolumesError('Удалять нечего')
         volumes = ', '.join(os.listdir(topics_abs))
         shutil.rmtree(topics_abs)
-        print('Удалены: ', volumes)
+        logger.info(f'Удалены: {volumes}')

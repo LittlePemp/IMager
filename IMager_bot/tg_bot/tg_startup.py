@@ -1,3 +1,4 @@
+import logging
 import os
 
 from aiogram.utils import executor
@@ -5,6 +6,8 @@ from settings.config import users_images_abs
 
 from tg_bot.create_bot import get_dp
 from tg_bot.handlers import client, commons
+
+logger = logging.getLogger(__name__)
 
 
 def make_user_volume():
@@ -14,7 +17,7 @@ def make_user_volume():
 
 async def on_startup(_):
     make_user_volume()
-    print('START BOT')
+    logger.info('START BOT')
 
 
 def start_bot():
