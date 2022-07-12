@@ -19,9 +19,7 @@ content_abs = abspath('content')
 
 # TG KEYBOARDS
 topics = {
-    'Котики': 'koty',
-    'Аниме': 'anime',
-    'Дота': 'dota',
+    'Коты': 'koty',
 }
 noise_degrees = {
     'Нет': (0, 0),

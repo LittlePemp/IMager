@@ -4,5 +4,5 @@
 *mypy*
 *tester*.py
 *users_photos*
-*content/*
+/content*
 *.log

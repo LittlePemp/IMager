@@ -4,7 +4,7 @@ from tg_bot.keyboards import common_keyboard
 
 async def command_start(message: types.Message):
     await message.answer(
-        'Привет! Я IMager, Бот, который создаст тебе картинку'
+        'Привет! Я IMager, Бот, который создаст картинку'
         ' из других картинок! Используй кнопочки снизу ⬇ '
         'и следуй инструкциям 😉',
         reply_markup=common_keyboard)
@@ -23,7 +23,6 @@ async def unknown_answer(message: types.Message):
 
 
 def register_handlers(dp: Dispatcher):
-    ''' Регистрируем без декораоров '''
     dp.register_message_handler(command_start, commands=['start',
                                                          'help',
                                                          'Помощь'])
