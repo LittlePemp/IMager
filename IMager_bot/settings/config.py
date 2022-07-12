@@ -1,10 +1,10 @@
 import logging
 import sys
-from os.path import abspath, join
+from os.path import abspath, join, dirname
 
 # sys settings
 host_platform = sys.platform
-dotenv_path = join(abspath(''), '.env')
+dotenv_path = join(abspath('..'), '.env')
 file_log = logging.FileHandler('log.log')
 console_out = logging.StreamHandler()
 logging.basicConfig(
@@ -14,8 +14,8 @@ logging.basicConfig(
     datefmt="%d/%b/%Y %H:%M:%S")
 
 # GENERAL
-CONTENT_VOLUME = 'content'
-content_abs = abspath('content')
+CONTENT_VOLUME = '../content'
+content_abs = abspath(CONTENT_VOLUME)
 
 # TG KEYBOARDS
 topics = {

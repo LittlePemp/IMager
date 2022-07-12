@@ -214,7 +214,9 @@ IMager bot - телеграм бот, реализующий интерфейс 
 <img src = "https://downloader.disk.yandex.ru/preview/09d35ef798534bff9bd8ee7c0fe3ae8f47feaaaa920c1175b538b993ec0cbbd9/62ce1b0b/eMteB1EgLOmCnc6dPXXlkmOKYAIwIKVOkaqDDe-QUywSs891zREiDw58SctLn3q5IK-tEE_8NN21X8bUXAzSbA%3D%3D?uid=0&filename=3.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964"></details>
 
 ### [3] Команды приложения.
-Получить список команд можно запустив скрипт
+
+**ВАЖНО! ВСЕ КОМАНДЫ ДОЛЖЫ ЗАПУСКАТЬСЯ ИЗ ДИРЕКТОРИИ С фалом "manage.py"**
+Получить список команд можно запустив скрипт.
 
 ```python manage.py```
 

@@ -7,7 +7,7 @@ import settings.command_exceptions as cexc
 
 def execute_from_command_line(args):
     cmds = [filename[:-3]
-            for filename in os.listdir('IMager_bot/commands')
+            for filename in os.listdir('commands')
             if filename[0] != '_']
     if len(args) != 2:
         raise cexc.WrongQuantityParams('Call this file like: '

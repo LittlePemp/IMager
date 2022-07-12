@@ -16,7 +16,7 @@ class ImagerDB:
         self.cursor = self.connection.cursor()
 
     def db_init(self):
-        if DB_NAME not in os.listdir(content_abs):
+        if not os.path.exists(db_abs):
             with open(db_abs, 'w') as _:
                 logger.info('Создана БД')
 
