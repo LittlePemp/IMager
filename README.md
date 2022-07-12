@@ -33,26 +33,25 @@ IMager bot - телеграм бот, реализующий интерфейс 
 В дальнейших состояниях появится кнопка `В начало`, переводящая в общее меню. 
 
 ---
-### /Начать - Выбрать тему
+#### /Начать - Выбрать тему
 Входим в FSM
 
 ![](https://downloader.disk.yandex.ru/preview/937551f455863b3c7d1177fe9e36e820fd3a4ca5cf349fb6a6e7e36474c49446/62ce1b68/4vRNhDfT8uaL_IEmTJlm34IINfzBHo08P-KvEJZ6CKG5i-Kk6CjeXArdZym1eWD5M9qUW44N5HDbuvt7y7SsdQ%3D%3D?uid=0&filename=8.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964)
 
 На выбор предоставляется набор тем для заполнения. Данный набор регулируется разработчкиом.
 
----
-### Выбрать степень шума
+#### Выбрать степень шума
 ![](https://downloader.disk.yandex.ru/preview/682ddb631856ab409bd30ca61c610c87522af981f21468466e3085e59206b8c0/62ce1be2/3RN4UWh8xZD8gCTlqpUmmfrvnNftrqLWdLs7cUe8cP3iGws06i2C7TC8l5jrtvrxRDEzvkAjPiqbZzoV6ulncw%3D%3D?uid=0&filename=9.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964)
 
 После выбранной темы предлагается выбрать [степень шума](#1-степень-шума).
 
 ---
-### Выбрать размер изображения
+#### Выбрать размер изображения
 ![](https://downloader.disk.yandex.ru/preview/46efb9e6f2f51ad306f599644e4c2d25786ae80e9e45d0a8604486de376fc95a/62ce1d15/N2nt-3-RSLFFL1YIKPe22I8Dcj9fdKD-tzVB1fxhm7dgwNe2mCObGJe2wUkF-SHyD9XDGXgtBDvhWZ0elTgNjw%3D%3D?uid=0&filename=15.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964)
 
 После выбранной степени шума предлагается выбрать [размер изображения](#2-размер-изображения).
 
-### Загрузка картинки, ожидание и результат
+#### Загрузка картинки, ожидание и результат
 
 ![](https://downloader.disk.yandex.ru/preview/c2f38ab07d289e67ec019da8c38adf2912ba24aeb149d022ba29d5093759a5fe/62ce1d4e/aSsYIesUkt3TJlF_NwFs7QW3k1IvT6CkWbzCFbmVDSbPxcN6n26T_OIveohkniFboNcCjCcdo-hCB9t5Dwr5eA%3D%3D?uid=0&filename=13.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964)
 
