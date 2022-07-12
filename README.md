@@ -7,9 +7,9 @@ IMager bot - телеграм бот, реализующий интерфейс 
 ## Каков в действии
 |   |   |
 |---|---|
-|<img src="./readme_content/5.PNG" width="100%">|<img src="./readme_content/6.PNG" width="100%">|
+|<img src="https://downloader.disk.yandex.ru/preview/2d4a9782abeb07572815ced6f1da2b586a770622aa5e6fce5d524804b6cd334b/62ce1a88/ku_u4IexMttnBzOJ19yoMVjB7ldIQEXtUu6due9OMS-c_5AwZFljUsoP2KvvmA3TvBrwKkzYHLBQSd7KfWAQeQ%3D%3D?uid=0&filename=5.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964" width="100%">|<img src="https://downloader.disk.yandex.ru/preview/808ede7f44daac32b4757a66fa119e2b72b01788bdaf3b4e2ed35f9534cc958d/62ce1aac/JBwRimG7zatDeoOQZEniFljB7ldIQEXtUu6due9OMS_Lvvo0P2PVI2mSuhCkK_xpGdaHvS8iNxq0hTSLcS2atg%3D%3D?uid=0&filename=6.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964" width="100%">|
 
-![result_chat](./readme_content/3.png)
+![result_chat](https://downloader.disk.yandex.ru/preview/09d35ef798534bff9bd8ee7c0fe3ae8f47feaaaa920c1175b538b993ec0cbbd9/62ce1b0b/eMteB1EgLOmCnc6dPXXlkmOKYAIwIKVOkaqDDe-QUywSs891zREiDw58SctLn3q5IK-tEE_8NN21X8bUXAzSbA%3D%3D?uid=0&filename=3.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964)
 
 ## Поэтапно
 ### Общее
@@ -18,16 +18,16 @@ IMager bot - телеграм бот, реализующий интерфейс 
 2. /Поддержать
 3. /Помощь
 
-![](./readme_content/7.PNG)
+![](https://downloader.disk.yandex.ru/preview/8aaca73d4e2f7e7ec73b2164f957a6768db395a185a0078c9f78307d1b841133/62ce1b3f/VyjjruFdx5YwRO-8Befuvcv9q-9fTrBnExqmdM1MfaLrDEI9mDvQvHvSnXj4OOFAJnLT772s2rkN5nC3xBAKtw%3D%3D?uid=0&filename=7.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964)
 
 ##### 1. Начать
 Команда `/Начать` инициализирует FSM.
 
 ##### 2. Поддержать
-Команда `/Поддержать` выводит информацию для поддержки разработчка (Кнопка для красоты)
+Команда `/Поддержать` выводит информацию для поддержки разработчка (Кнопка для красоты).
 
 ##### 3. Помощь
-Команда `/Помощь` выводит сообщение `/start` (со скриншота выше)
+Команда `/Помощь` выводит сообщение `/start` (со скриншота выше).
 
 ##### (+) 4. В начало
 В дальнейших состояниях появится кнопка `В начало`, переводящая в общее меню. 
@@ -36,30 +36,28 @@ IMager bot - телеграм бот, реализующий интерфейс 
 ### /Начать - Выбрать тему
 Входим в FSM
 
-![](./readme_content/8.PNG)
+![](https://downloader.disk.yandex.ru/preview/937551f455863b3c7d1177fe9e36e820fd3a4ca5cf349fb6a6e7e36474c49446/62ce1b68/4vRNhDfT8uaL_IEmTJlm34IINfzBHo08P-KvEJZ6CKG5i-Kk6CjeXArdZym1eWD5M9qUW44N5HDbuvt7y7SsdQ%3D%3D?uid=0&filename=8.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964)
 
 На выбор предоставляется набор тем для заполнения. Данный набор регулируется разработчкиом.
 
 ---
 ### Выбрать степень шума
-![](./readme_content/9.PNG)
+![](https://downloader.disk.yandex.ru/preview/682ddb631856ab409bd30ca61c610c87522af981f21468466e3085e59206b8c0/62ce1be2/3RN4UWh8xZD8gCTlqpUmmfrvnNftrqLWdLs7cUe8cP3iGws06i2C7TC8l5jrtvrxRDEzvkAjPiqbZzoV6ulncw%3D%3D?uid=0&filename=9.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964)
 
-После выбранной темы предлагается выбрать [степень шума](#1-степень-шума)
+После выбранной темы предлагается выбрать [степень шума](#1-степень-шума).
 
 ---
 ### Выбрать размер изображения
-![](./readme_content/9.PNG)
+![](https://downloader.disk.yandex.ru/preview/46efb9e6f2f51ad306f599644e4c2d25786ae80e9e45d0a8604486de376fc95a/62ce1d15/N2nt-3-RSLFFL1YIKPe22I8Dcj9fdKD-tzVB1fxhm7dgwNe2mCObGJe2wUkF-SHyD9XDGXgtBDvhWZ0elTgNjw%3D%3D?uid=0&filename=15.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964)
 
-После выбранной степени шума предлагается выбрать [размер изображения](#2-размер-изображения)
+После выбранной степени шума предлагается выбрать [размер изображения](#2-размер-изображения).
 
-### Загрузить картинку
-![](./readme_content/9.PNG)
+### Загрузка картинки, ожидание и результат
 
-После выбранного размера картинки предлагается загрузить картинку
-#### Ожидание и результат
-![](./readme_content/13.PNG)
+![](https://downloader.disk.yandex.ru/preview/c2f38ab07d289e67ec019da8c38adf2912ba24aeb149d022ba29d5093759a5fe/62ce1d4e/aSsYIesUkt3TJlF_NwFs7QW3k1IvT6CkWbzCFbmVDSbPxcN6n26T_OIveohkniFboNcCjCcdo-hCB9t5Dwr5eA%3D%3D?uid=0&filename=13.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964)
 
-Результат присылается файлом в формате *.png
+После выбранного размера картинки предлагается загрузить картинку.<br>
+Результат присылается файлом в формате *.png.
 
 ## Технологии
 * Python 3.9+
@@ -75,7 +73,7 @@ IMager bot - телеграм бот, реализующий интерфейс 
 На каждую собранную картинку сверху накладывается оригинал.<br>
 Это позволяет сгладить "неровности" вставленных картинок и подогнать к оригиналу.
 
-Оригинал конвертируется в RGBA с установленным альфа-каналом 120/256, что дает такой результат:
+Оригинал конвертируется в RGBA с установленным альфа-каналом 120/256, что дает такой результат...
 
 Данные:
 |Тема|Степень шума|Размер|Картинка|
@@ -84,7 +82,7 @@ IMager bot - телеграм бот, реализующий интерфейс 
 
 | Без наложения | С наложением |
 |:---:|:---:|
-|<img src="readme_content/5.jpg" width="100%">|<img src="readme_content/4.jpg" width="100%">|
+|<img src="https://downloader.disk.yandex.ru/preview/f263f8c7727efeb6b768f859d2cee94346d16de67f2cabeab759fee2289ee933/62ce1e7e/ejO60w5I6znwfJZiq4ueNY1bdxR4zs2Vx3Fq2ZeBOz7Pi9XlA28Cu6VBCSxxtq4PkxNoQQa-bC2kU6caNYYfJQ%3D%3D?uid=0&filename=5.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&tknv=v2&size=1920x964" width="100%">|<img src="https://downloader.disk.yandex.ru/preview/6457ad8afc9c8eeb351add6c8d961d700d557c348ac6e6b6568149929ae608f1/62ce1e49/2li48zJtiPQKD9hRroxPJxCt13IprY8ex6qm6UhN1ey-esfy9MdvsEA9Sx_muJeGGFq_gldEWpUM8KxV44Hf4A%3D%3D?uid=0&filename=4.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&tknv=v2&size=1920x964" width="100%">|
 
 ### Нагрузка на оперативную память
 Для ускоренной работы приложения и сборки в оперативной памяти хранится информация о:
@@ -146,17 +144,15 @@ IMager bot - телеграм бот, реализующий интерфейс 
 |Дота|Нет|Большое|Градиент|
 
 <details><summary>Оригинал</summary><br>
-<img src = "readme_content/1.jpg"></details>
+<img src = "https://downloader.disk.yandex.ru/preview/eac7554c84bd9c2597164a1d59b6300be26e94a792f8797548efeb703882cba1/62ce18f2/emJjdxILAJ4vz3qyzsOtQHx9aSVpcUVwNpbEfZtCjQoFDx6fWAo2VQG55IDnT6WG6ojwzvOrOuu6eKYLynYlPQ%3D%3D?uid=0&filename=1.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&tknv=v2&size=1920x964"></details>
 
 <details><summary>Результат</summary><br>
-<img src = "https://disk.yandex.ru/i/WnaEygBFL06vcg"></details>
+<img src = "https://downloader.disk.yandex.ru/preview/053e9cb9576dbf51ad710c85cba08ea99af25b9236171ecc554d7661ebeaf047/62ce1ef4/pMxRKNXxFwCXO-qghtA3SzUYnt7TZ_-CTxIHmArDOnxookjBTYeGl3aX8Bcu9wMdZu38eocK8VwFGqBAQlIevQ%3D%3D?uid=0&filename=1.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964"></details>
 
 <details><summary>Увеличение</summary><br>
-<img src = "readme_content/10.png"></details>
+<img src = "https://downloader.disk.yandex.ru/preview/4f051e49063f8c2dd53d073d3bbd3665a1af6f1467b09df56cbf06f78892e665/62ce1f4c/reZoNrAf13orNhkFphdxUYTmOZrvPw9JOaehh4-3GfXMq3RiVhF7M_Ftr7soDJdVZ4NX1ktZzku0gx0L988aDw%3D%3D?uid=0&filename=10.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964"></details>
 
 Заметно, что при таком раскраде происходит по теории выше. Одна картинка по охватывает некоторый диапазон цветов.
-
----
 
 **2. Сильный шум. Хорошый расклад**
 
@@ -166,13 +162,13 @@ IMager bot - телеграм бот, реализующий интерфейс 
 |Дота|Сильно|Большое|Градиент|
 
 <details><summary>Оригинал</summary><br>
-<img src = "readme_content/1.jpg"></details>
+<img src = "https://downloader.disk.yandex.ru/preview/eac7554c84bd9c2597164a1d59b6300be26e94a792f8797548efeb703882cba1/62ce18f2/emJjdxILAJ4vz3qyzsOtQHx9aSVpcUVwNpbEfZtCjQoFDx6fWAo2VQG55IDnT6WG6ojwzvOrOuu6eKYLynYlPQ%3D%3D?uid=0&filename=1.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&tknv=v2&size=1920x964"></details>
 
 <details><summary>Результат</summary><br>
-<img src = "readme_content/2.png"></details>
+<img src = "https://downloader.disk.yandex.ru/preview/aa86abff17abb6302bc55c205dd3c7a43741dbce9125c53ca9ab3304727f558d/62ce1fa2/AOmgItN9GWfsX4s5no42nRcnMFbvgF2YkCPb8r7zzAB3HMkT_eROpMuyQiR8CWPrcy9HV-KMs8i0AbOzKzPcdQ%3D%3D?uid=0&filename=2.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964"></details>
 
 <details><summary>Увеличение</summary><br>
-<img src = "readme_content/11.png"></details>
+<img src = "https://downloader.disk.yandex.ru/preview/c76693b52dab450dccd72a65b6891ebcfe3c152e131ed306c91802fc01abcd77/62ce1fc8/saiKC1YKgGh7_3lHeFKoD1ZDZDkamflnNvaQbAo_FhIoo-4rFg_cEgCRcsAE1_hooZq-erRa3dsWV5w59GmuAg%3D%3D?uid=0&filename=11.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964"></details>
 
 В данном случае это выглядит намного органичнее.
 
@@ -186,13 +182,13 @@ IMager bot - телеграм бот, реализующий интерфейс 
 |Дота|Сильно|Большое|Пёстрая|
 
 <details><summary>Оригинал</summary><br>
-<img src = "readme_content/2.jpg"></details>
+<img src = "https://sun9-4.userapi.com/impg/V_rjxVpoi9PPSPIsYhWDF9wub9rA9gqbfWt_5Q/ehN-DuDsRmY.jpg?size=1280x590&quality=96&sign=12bd88416bd6bf5427a52445f33cb7b2&type=album"></details>
 
 <details><summary>Результат</summary><br>
-<img src = "readme_content/4.png"></details>
+<img src = "https://downloader.disk.yandex.ru/preview/837cc18110fa4c8ab06d254eb627cb23f32a32ad6985744a357a5627829ccbd7/62ce2093/5WBNjo5yKJhCXd4wP17aZU9EudBnFE0LTRZ3M-Z-I1g1jRL1gIrxUgFuSqiL0anLIXn_gu8GzzufswintWHnbw%3D%3D?uid=0&filename=4.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964"></details>
 
 <details><summary>Увеличение</summary><br>
-<img src = "readme_content/12.png"></details>
+<img src = "https://downloader.disk.yandex.ru/preview/52d12c201227ed35b978ed9104f8b059f26266360c9cc75a0e9670c8568b4ce2/62ce20bd/fgneCgxqVdcI7j7Kuao1S_5mkOpocGJVBAK_se0noqcSZabIxdIIF1IzuZkA-MMiSZZQOtPWVZJ7N8S-toyUoQ%3D%3D?uid=0&filename=12.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964"></details>
 
 Как видно, данная картинка отлично смотрится при отсутствии шума. С сильным шумом тут будет просто хаос.
 
@@ -212,10 +208,10 @@ IMager bot - телеграм бот, реализующий интерфейс 
 |Дота|Среднее|Маленькое|Маленькая, с большими элементами|
 
 <details><summary>Оригинал</summary><br>
-<img src = "readme_content/3.jpg"></details>
+<img src = "https://downloader.disk.yandex.ru/preview/7bca012444235d3971d93a274bc3ddf84200e12a0a8d04a498f8fedd4f621b84/62ce20fe/DrNQ6nADKVR7GgAwv72IqxRcJaHxMqSh0MmXjqTllYShyTheB62iko89VxOd9CrHWjqsqe61HYHz8qc4FOamRg%3D%3D?uid=0&filename=3.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&tknv=v2&size=1920x964"></details>
 
 <details><summary>Результат</summary><br>
-<img src = "readme_content/3.png"></details>
+<img src = "https://downloader.disk.yandex.ru/preview/09d35ef798534bff9bd8ee7c0fe3ae8f47feaaaa920c1175b538b993ec0cbbd9/62ce1b0b/eMteB1EgLOmCnc6dPXXlkmOKYAIwIKVOkaqDDe-QUywSs891zREiDw58SctLn3q5IK-tEE_8NN21X8bUXAzSbA%3D%3D?uid=0&filename=3.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964"></details>
 
 ### [3] Команды приложения.
 Получить список команд можно запустив скрипт
@@ -253,7 +249,7 @@ d. После парсинга начнется скачивание новых 
 Например:
 | Коты | Дота |
 |:---:|:---:|
-|<img src="readme_content/koty.png" width="100%">|<img src="readme_content/dota.png" width="100%">|
+|<img src="https://downloader.disk.yandex.ru/preview/225a0ddc3ade8f66762439223436dc47f0c70dbff14c8c3d6cf9345dcb34af99/62ce213c/fgneCgxqVdcI7j7Kuao1S-cfokv_6Ww1n7u2wVnzkNREzn5f-_WqPGzI9WHrUqR1AvALtPuVGq0gaDJ_5ejbaw%3D%3D?uid=0&filename=koty.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964" width="100%">|<img src="https://downloader.disk.yandex.ru/preview/bae00ba770500fbf19d583307ce320830aef6891a7c12d14a8bee4ab290d5b14/62ce2152/llT07mye62KbGsJkC5Vwb-cfokv_6Ww1n7u2wVnzkNS0qonvXrZ2uAL0PdjFeitJDv2n7mKoR1SQ0y9uOK_jbQ%3D%3D?uid=0&filename=dota.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964" width="100%">|
 
 #### **Команда @test_engine**
 Программа собирает картинку без учета телеграм бота. На вывод получите абсольтный путь к итоговой картинке.
@@ -296,6 +292,5 @@ IMager
 │   │   │   └───<Клавиатуры бота>
 │   │   └───<Основные файлы бота>
 │   └───manage.py
-└───readme_content
-    └───<Картинки для README.md>
+└───<Прочие служебные файлы>
 ```
