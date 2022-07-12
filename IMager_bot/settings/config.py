@@ -5,10 +5,11 @@ from os.path import abspath, join
 # sys settings
 host_platform = sys.platform
 dotenv_path = join(abspath(''), '.env')
+file_log = logging.FileHandler('log.log')
+console_out = logging.StreamHandler()
 logging.basicConfig(
+    handlers=(file_log, console_out),
     level=logging.INFO,
-    filename='log.log',
-    encoding='utf-8',
     format="[%(asctime)s][%(name)s.%(funcName)s]%(levelname)s: %(message)s",
     datefmt="%d/%b/%Y %H:%M:%S")
 
