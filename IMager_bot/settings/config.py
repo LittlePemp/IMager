@@ -31,6 +31,7 @@ new_image_sizes = {
     'Среднее': 50,
     'Большое': 100,
 }
+
 DEL_MODE = False  # Удаляет созданные файлы
 
 # TG VOLUMES
