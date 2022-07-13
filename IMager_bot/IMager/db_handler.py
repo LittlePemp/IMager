@@ -4,7 +4,7 @@ import sqlite3
 from typing import Optional
 
 from PIL import Image
-from settings.config import DB_NAME, content_abs, db_abs, topics_abs
+from settings.config import content_abs, db_abs, topics_abs
 
 logger = logging.getLogger(__name__)
 
@@ -16,6 +16,8 @@ class ImagerDB:
         self.cursor = self.connection.cursor()
 
     def db_init(self):
+        if not os.path.exists(content_abs):
+            os.makedirs(content_abs)
         if not os.path.exists(db_abs):
             with open(db_abs, 'w') as _:
                 logger.info('Создана БД')
