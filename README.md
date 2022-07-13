@@ -64,6 +64,7 @@ IMager bot - телеграм бот, реализующий интерфейс 
 * Poetry
 * Flake8
 * Sqlite3
+* aiogram
 * git
 * linux
 * VSCode/Sublime Text 3
