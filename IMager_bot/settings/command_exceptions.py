@@ -8,3 +8,7 @@ class WrongQuantityParams(Exception):
 
 class StopCommandRun(Exception):
     pass
+
+
+class NotTopicsVolume(Exception):
+    pass

@@ -2,10 +2,14 @@ import os
 
 from IMager.db_handler import ImagerDB as IDB
 from settings.config import topics_abs
+from settings.command_exceptions import NotTopicsVolume
 
 idb = IDB()
 print('Выберите имя директории:')
-topics = os.listdir(topics_abs)
+try:
+    topics = os.listdir(topics_abs)
+except FileNotFoundError:
+    raise NotTopicsVolume('Загрузите картинки')
 for topic_id, topic_name in enumerate(topics):
     print(f'{topic_id}: {topic_name}')
 topic_id = input()
