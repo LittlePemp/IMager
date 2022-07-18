@@ -327,7 +327,7 @@ d. После парсинга начнется скачивание новых 
 Например:
 | Коты | Дота |
 |:---:|:---:|
-|<img src="https://downloader.disk.yandex.ru/preview/225a0ddc3ade8f66762439223436dc47f0c70dbff14c8c3d6cf9345dcb34af99/62ce213c/fgneCgxqVdcI7j7Kuao1S-cfokv_6Ww1n7u2wVnzkNREzn5f-_WqPGzI9WHrUqR1AvALtPuVGq0gaDJ_5ejbaw%3D%3D?uid=0&filename=koty.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964" width="100%">|<img src="https://downloader.disk.yandex.ru/preview/bae00ba770500fbf19d583307ce320830aef6891a7c12d14a8bee4ab290d5b14/62ce2152/llT07mye62KbGsJkC5Vwb-cfokv_6Ww1n7u2wVnzkNS0qonvXrZ2uAL0PdjFeitJDv2n7mKoR1SQ0y9uOK_jbQ%3D%3D?uid=0&filename=dota.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x964" width="100%">|
+|<img src="https://1.downloader.disk.yandex.ru/preview/2fad77fa251c5a2b4ad3077caedecd08caf5ae12e328f5923179a1046cff2446/inf/llT07mye62KbGsJkC5Vwb-cfokv_6Ww1n7u2wVnzkNS0qonvXrZ2uAL0PdjFeitJDv2n7mKoR1SQ0y9uOK_jbQ%3D%3D?uid=198096254&filename=dota.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=198096254&tknv=v2&size=1903x964" width="100%">|<img src="https://3.downloader.disk.yandex.ru/preview/521412cf5b1dc56f8c46b6bb84df96b853c5189a67491b95f375c3b3c32f95fd/inf/fgneCgxqVdcI7j7Kuao1S-cfokv_6Ww1n7u2wVnzkNREzn5f-_WqPGzI9WHrUqR1AvALtPuVGq0gaDJ_5ejbaw%3D%3D?uid=198096254&filename=koty.PNG&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=198096254&tknv=v2&size=1903x964" width="100%">|
 
 #### **Команда @test_engine**
 Программа собирает картинку без учета телеграм бота. На вывод получите абсольтный путь к итоговой картинке.
